@@ -1,0 +1,6 @@
+ep  250 | step    6083 | reward    66 | eps 0.751 | qmax   8.89 | held-out   8.37 |    8.8s
+ep  500 | step   13173 | reward    58 | eps 0.404 | qmax  14.81 | held-out  14.53 |   20.2s
+ep  750 | step   46754 | reward    93 | eps 0.020 | qmax  19.70 | held-out  18.70 |   70.6s
+solved at episode 800: 50 consecutive greedy evaluation episodes of 500 steps; training stops
+eval final network (greedy): {"episodes": 500, "epsilon": 0.0, "mean": 498.732, "std": 12.647378226336082, "min": 364.0, "max": 500.0, "solved_fraction": 0.99, "ends": {"angle": 0, "position": 5, "time limit": 495}, "seed": 1003}
+eval selected network (greedy): {"episodes": 500, "epsilon": 0.0, "mean": 498.732, "std": 12.647378226336082, "min": 364.0, "max": 500.0, "solved_fraction": 0.99, "ends": {"angle": 0, "position": 5, "time limit": 495}, "seed": 1003}

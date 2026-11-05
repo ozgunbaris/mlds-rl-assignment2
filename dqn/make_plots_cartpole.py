@@ -50,6 +50,27 @@ def maxq_plot(ep, gamma, path, title):
     plt.close(fig)
 
 
+def training_with_checks(ep, path, title):
+    """Required plot (ii) plus the greedy evaluation checks made during training."""
+    import matplotlib.pyplot as plt
+    viz.setup()
+    x = ep["episode"]
+    fig, ax = plt.subplots(figsize=(9, 4.8))
+    ax.plot(x, ep["reward"], color=viz.BLUE, lw=0.6, alpha=0.35, label="episode reward (epsilon-greedy, epsilon = 0.1 after step 21,000)")
+    ax.plot(x, moving_average(ep["reward"], 100), color=viz.ORANGE, lw=2.0, label="moving average (100 episodes)")
+    if "eval_greedy_mean" in ep:
+        m = ~np.isnan(ep["eval_greedy_mean"])
+        ax.plot(x[m], ep["eval_greedy_mean"][m], "o", color=viz.GREEN, ms=3.5,
+                label="greedy check: mean of 20 separate evaluation episodes")
+    ax.set_xlabel("training episode")
+    ax.set_ylabel("episode reward")
+    ax.set_title(title)
+    ax.set_ylim(0, 520)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.14), ncol=2, fontsize=8)
+    fig.savefig(path)
+    plt.close(fig)
+
+
 def end_fractions(ep, path, title, window=100):
     import matplotlib.pyplot as plt
     viz.setup()
@@ -94,8 +115,8 @@ def main():
                           "eval": ev, "eval_selected": evb})
             if prefix == "main":
                 g = cfg["gamma"]
-                viz.training_curve(ep["reward"], os.path.join(per_run, f"cartpole_{name}_training.png"),
-                                   f"CartPole-v1, Double DQN, {name}: episode reward")
+                training_with_checks(ep, os.path.join(per_run, f"cartpole_{name}_training.png"),
+                                     f"CartPole-v1, Double DQN, {name}: episode reward")
                 maxq_plot(ep, g, os.path.join(per_run, f"cartpole_{name}_maxq.png"),
                           f"CartPole-v1, Double DQN, {name}: maximum Q-value per training episode")
                 end_fractions(ep, os.path.join(per_run, f"cartpole_{name}_ends.png"), f"CartPole-v1, {name}: how episodes ended")

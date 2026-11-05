@@ -1,0 +1,7 @@
+ep  250 | step    6142 | reward    45 | eps 0.748 | qmax   9.22 | held-out   8.48 |   13.0s
+ep  500 | step   22249 | reward   162 | eps 0.020 | qmax  18.84 | held-out  17.24 |   52.6s
+ep  750 | step   60838 | reward   171 | eps 0.020 | qmax  17.83 | held-out  18.16 |  143.1s
+ep 1000 | step  110494 | reward   117 | eps 0.020 | qmax  19.74 | held-out  18.27 |  282.4s
+ep 1250 | step  181956 | reward   261 | eps 0.020 | qmax  18.79 | held-out  17.92 |  486.1s
+ep 1500 | step  249230 | reward   392 | eps 0.020 | qmax  19.58 | held-out  17.99 |  680.1s
+eval (greedy): {"episodes": 500, "epsilon": 0.0, "mean": 448.776, "std": 72.98233912392779, "min": 262.0, "max": 500.0, "solved_fraction": 0.598, "ends": {"angle": 0, "position": 201, "time limit": 299}, "seed": 1000}

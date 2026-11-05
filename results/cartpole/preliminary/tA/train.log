@@ -1,0 +1,2 @@
+ep  500 | step   19203 | reward    34 | eps 0.108 | qmax  16.83 | held-out  15.99 |   28.3s
+ep 1000 | step  105839 | reward   359 | eps 0.020 | qmax  19.74 | held-out  17.79 |  168.7s

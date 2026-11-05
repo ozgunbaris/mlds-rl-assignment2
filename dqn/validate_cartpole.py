@@ -155,9 +155,15 @@ def mirror(net, seeds=range(10)):
     d = np.abs(q[:, 0] - qm[:, 1])  # Q(s, left) vs Q(-s, right)
     adv = q[:, 1] - q[:, 0]
     adv_m = qm[:, 0] - qm[:, 1]
+    by_gap = {}
+    for th in [0.1, 0.5, 1.0]:
+        m = np.abs(adv) > th
+        by_gap[f"|gap|>{th}"] = {"share_of_states": float(m.mean()),
+                                 "greedy_action_agreement": float(np.mean((adv[m] > 0) == (adv_m[m] > 0)))}
     return {"states": int(len(S)), "mean_abs_diff": float(d.mean()), "max_abs_diff": float(d.max()),
             "corr_action_gap": float(np.corrcoef(adv, adv_m)[0, 1]),
-            "greedy_action_agreement": float(np.mean((adv > 0) == (adv_m > 0)))}
+            "greedy_action_agreement": float(np.mean((adv > 0) == (adv_m > 0))),
+            "median_abs_action_gap": float(np.median(np.abs(adv))), "agreement_by_gap": by_gap}
 
 
 # ----------------------------------------------------------------------------- C6 maps
