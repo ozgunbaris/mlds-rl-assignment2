@@ -4,9 +4,13 @@ import torch.nn as nn
 
 
 class MLPQNet(nn.Module):
-    """obs (B, obs_dim) -> Q(s, .) (B, n_actions)."""
+    """obs (B, obs_dim) -> Q(s, .) (B, n_actions).
 
-    def __init__(self, obs_dim: int = 4, n_actions: int = 2, hidden=(128, 128)):
+    in_scale divides each input feature by a fixed constant (stored with the weights). For CartPole
+    the default scales (2.4, 3, 0.21, 3.5) are the cart-position and pole-angle failure thresholds
+    and typical velocity magnitudes, so all four inputs are of order 1."""
+
+    def __init__(self, obs_dim: int = 4, n_actions: int = 2, hidden=(128, 128), in_scale=None):
         super().__init__()
         layers, d = [], obs_dim
         for h in hidden:
@@ -14,9 +18,11 @@ class MLPQNet(nn.Module):
             d = h
         layers.append(nn.Linear(d, n_actions))
         self.net = nn.Sequential(*layers)
+        scale = torch.ones(obs_dim) if in_scale is None else torch.as_tensor(in_scale, dtype=torch.float32)
+        self.register_buffer("in_scale", scale)
 
     def forward(self, x):
-        return self.net(x)
+        return self.net(x / self.in_scale)
 
 
 class AtariQNet(nn.Module):
