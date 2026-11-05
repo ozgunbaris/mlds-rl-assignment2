@@ -94,19 +94,19 @@ def main():
                           "eval": ev, "eval_selected": evb})
             if prefix == "main":
                 g = cfg["gamma"]
-                viz.training_curve(ep["reward"], os.path.join(per_run, f"{name}_training.png"),
+                viz.training_curve(ep["reward"], os.path.join(per_run, f"cartpole_{name}_training.png"),
                                    f"CartPole-v1, Double DQN, {name}: episode reward")
-                maxq_plot(ep, g, os.path.join(per_run, f"{name}_maxq.png"),
+                maxq_plot(ep, g, os.path.join(per_run, f"cartpole_{name}_maxq.png"),
                           f"CartPole-v1, Double DQN, {name}: maximum Q-value per training episode")
-                end_fractions(ep, os.path.join(per_run, f"{name}_ends.png"), f"CartPole-v1, {name}: how episodes ended")
+                end_fractions(ep, os.path.join(per_run, f"cartpole_{name}_ends.png"), f"CartPole-v1, {name}: how episodes ended")
                 if ev is not None:
                     r = np.load(os.path.join(d, "eval_rewards_greedy.npy"))
-                    viz.reward_histogram(r, os.path.join(per_run, f"{name}_hist.png"),
+                    viz.reward_histogram(r, os.path.join(per_run, f"cartpole_{name}_hist.png"),
                                          f"CartPole-v1, {name}: 500 greedy roll-outs of the final network",
                                          bins=np.arange(0, 525, 25))
                 if evb is not None:
                     r = np.load(os.path.join(d, "eval_rewards_greedy_best.npy"))
-                    viz.reward_histogram(r, os.path.join(per_run, f"{name}_hist_selected.png"),
+                    viz.reward_histogram(r, os.path.join(per_run, f"cartpole_{name}_hist_selected.png"),
                                          f"CartPole-v1, {name}: 500 greedy roll-outs of the selected network",
                                          bins=np.arange(0, 525, 25))
     # seeds and ablations

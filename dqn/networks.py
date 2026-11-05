@@ -34,16 +34,27 @@ class AtariQNet(nn.Module):
     Spatial sizes: 88x80 -> 21x19 -> 9x8 -> 7x6, so the flattened size is 64*7*6 = 2688.
     """
 
-    def __init__(self, n_actions: int = 9, in_frames: int = 4, height: int = 88, width: int = 80):
+    def __init__(self, n_actions: int = 9, in_frames: int = 4, height: int = 88, width: int = 80, arch: str = "nature"):
         super().__init__()
-        self.conv = nn.Sequential(
-            nn.Conv2d(in_frames, 32, 8, stride=4), nn.ReLU(),
-            nn.Conv2d(32, 64, 4, stride=2), nn.ReLU(),
-            nn.Conv2d(64, 64, 3, stride=1), nn.ReLU(),
-        )
+        if arch == "nature":
+            self.conv = nn.Sequential(
+                nn.Conv2d(in_frames, 32, 8, stride=4), nn.ReLU(),
+                nn.Conv2d(32, 64, 4, stride=2), nn.ReLU(),
+                nn.Conv2d(64, 64, 3, stride=1), nn.ReLU(),
+            )
+            hidden = 512
+        elif arch == "nips":
+            # Mnih et al. (2013): conv 8x8/4 (16) -> conv 4x4/2 (32) -> fc 256; 88x80 -> 21x19 -> 9x8
+            self.conv = nn.Sequential(
+                nn.Conv2d(in_frames, 16, 8, stride=4), nn.ReLU(),
+                nn.Conv2d(16, 32, 4, stride=2), nn.ReLU(),
+            )
+            hidden = 256
+        else:
+            raise ValueError(arch)
         with torch.no_grad():
             n = self.conv(torch.zeros(1, in_frames, height, width)).numel()
-        self.head = nn.Sequential(nn.Flatten(), nn.Linear(n, 512), nn.ReLU(), nn.Linear(512, n_actions))
+        self.head = nn.Sequential(nn.Flatten(), nn.Linear(n, hidden), nn.ReLU(), nn.Linear(hidden, n_actions))
         self.to(memory_format=torch.channels_last)  # 1.3-2x faster convolutions on CPU (oneDNN)
 
     def forward(self, x):

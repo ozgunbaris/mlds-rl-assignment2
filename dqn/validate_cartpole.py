@@ -170,6 +170,9 @@ def value_maps(run_dir, out, gamma, tag):
         cand = [p for p in snaps if int(os.path.basename(p)[2:6]) == w]
         if cand:
             pick.append((w, cand[0]))
+    sel = json.load(open(os.path.join(run_dir, "best_selection.json")))
+    pick = [(w, p) for w, p in pick if w <= sel["episode"]]
+    pick.append((f"selected (episode {sel['episode']})", os.path.join(run_dir, "best_weights.pt")))
     pick.append(("final", os.path.join(run_dir, "final_weights.pt")))
     th = np.linspace(-0.21, 0.21, 121)
     thd = np.linspace(-2.0, 2.0, 121)
@@ -184,7 +187,8 @@ def value_maps(run_dir, out, gamma, tag):
         V = q.max(1).reshape(T.shape)
         gap = (q[:, 1] - q[:, 0]).reshape(T.shape)
         im = axes[0, k].pcolormesh(T, TD, V, cmap="viridis", vmin=0, vmax=1 / (1 - gamma) * 1.05, shading="auto")
-        axes[0, k].set_title(f"episode {w}" if w != "final" else "final network", fontsize=10)
+        axes[0, k].set_title(f"episode {w}" if isinstance(w, int) else
+                             ("final network (episode 1000)" if w == "final" else w), fontsize=9)
         axes[1, k].pcolormesh(T, TD, np.sign(gap), cmap="coolwarm", vmin=-1.5, vmax=1.5, shading="auto")
         axes[1, k].contour(T, TD, gap, levels=[0], colors="k", linewidths=0.8)
         axes[1, k].set_xlabel("pole angle theta (rad)")
@@ -195,12 +199,12 @@ def value_maps(run_dir, out, gamma, tag):
                  "over pole angle and angular velocity", fontsize=11)
     fig.savefig(os.path.join(out, f"fig_val_policy_maps_{tag}.png"))
     plt.close(fig)
-    # cart position map of the final network
+    # cart position map of the selected network
     x = np.linspace(-2.4, 2.4, 121)
     xd = np.linspace(-2.0, 2.0, 121)
     X, XD = np.meshgrid(x, xd)
     g2 = np.stack([X, XD, np.zeros_like(X), np.zeros_like(X)], -1).reshape(-1, 4).astype(np.float32)
-    net = load_net(os.path.join(run_dir, "final_weights.pt"))
+    net = load_net(os.path.join(run_dir, "best_weights.pt"))
     with torch.no_grad():
         V2 = net(torch.as_tensor(g2)).numpy().max(1).reshape(X.shape)
     fig, ax = plt.subplots(figsize=(6.5, 4.2))
@@ -208,7 +212,7 @@ def value_maps(run_dir, out, gamma, tag):
     ax.contour(X, XD, V2, levels=[15, 18, 19, 19.5], colors="w", linewidths=0.7)
     ax.set_xlabel("cart position x (track edges at +-2.4)")
     ax.set_ylabel("cart velocity x_dot")
-    ax.set_title("Final network: max_a Q over cart position and velocity (pole upright)")
+    ax.set_title("Selected network: max_a Q over cart position and velocity (pole upright)")
     fig.colorbar(im, ax=ax, label="max_a Q")
     fig.savefig(os.path.join(out, f"fig_val_position_map_{tag}.png"))
     plt.close(fig)
@@ -266,9 +270,9 @@ def main():
         res["C7_groups"] = groups
     if "network" in todo and groups.get(args.main_prefix):
         main_runs = groups[args.main_prefix]
-        best = max(main_runs, key=lambda r: (r["solved_fraction"], r["eval_mean"]))
+        best = max(main_runs, key=lambda r: (r["best_solved_fraction"] or 0, r["best_eval_mean"] or 0, -int(r["run"][-1])))
         run_dir = os.path.join(args.results, best["run"])
-        net = load_net(os.path.join(run_dir, "final_weights.pt"))
+        net = load_net(os.path.join(run_dir, "best_weights.pt"))
         gamma = best["gamma"]
         res["network_run"] = best["run"]
         res["C3_overestimation"] = overestimation(net, gamma)

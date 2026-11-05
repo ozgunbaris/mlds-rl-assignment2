@@ -78,9 +78,13 @@ class FrameStack:
         return self.s
 
 
+def net_device(net):
+    return next(net.parameters()).device
+
+
 def q_values(net, state):
     with torch.no_grad():
-        return net(torch.from_numpy(state)[None])[0].numpy()
+        return net(torch.from_numpy(state)[None].to(net_device(net)))[0].cpu().numpy()
 
 
 def play_episode(env, net, eps, rng, record=False):
@@ -131,9 +135,10 @@ def collect_heldout_states(n, seed, every=4):
 
 def heldout_q(net, states, batch=250):
     vals = []
+    dev = net_device(net)
     with torch.no_grad():
         for i in range(0, len(states), batch):
-            vals.append(net(torch.from_numpy(states[i:i + batch])).max(1).values.numpy())
+            vals.append(net(torch.from_numpy(states[i:i + batch]).to(dev)).max(1).values.cpu().numpy())
     v = np.concatenate(vals)
     return float(v.mean()), float(v.std())
 
@@ -170,7 +175,12 @@ def train(args):
     os.makedirs(snap_dir, exist_ok=True)
     ckpt_path = os.path.join(args.out, "checkpoint.pt")
 
-    online = AtariQNet(N_ACTIONS)
+    if args.device == "auto":
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    else:
+        device = torch.device(args.device)
+    print(f"device: {device}", flush=True)
+    online = AtariQNet(N_ACTIONS, arch=args.arch).to(device)
     target = copy.deepcopy(online)
     for p in target.parameters():
         p.requires_grad_(False)
@@ -187,7 +197,7 @@ def train(args):
     refill_until = args.learning_starts
     resumed = False
     if args.resume and os.path.exists(ckpt_path):
-        ck = torch.load(ckpt_path, weights_only=False)
+        ck = torch.load(ckpt_path, weights_only=False, map_location=device)
         online.load_state_dict(ck["online"])
         target.load_state_dict(ck["target"])
         opt.load_state_dict(ck["opt"])
@@ -281,8 +291,7 @@ def train(args):
             step += 1
             if step > refill_until and step % args.train_freq == 0:
                 s, a_b, r_b, d_b, s2, _ = buf.sample(args.batch_size)
-                batch = (torch.from_numpy(s), torch.from_numpy(a_b), torch.from_numpy(r_b),
-                         torch.from_numpy(d_b), torch.from_numpy(s2))
+                batch = tuple(torch.from_numpy(x).to(device) for x in (s, a_b, r_b, d_b, s2))
                 stats.append(dqn_update(online, target, opt, batch, args.gamma, double=args.double,
                                         loss=args.loss, grad_clip=args.grad_clip, reward_clip=args.reward_clip))
                 sched.step()
@@ -335,10 +344,10 @@ def train(args):
 
 
 def load_net(path):
-    net = AtariQNet(N_ACTIONS)
-    sd = torch.load(path, weights_only=False)
+    sd = torch.load(path, weights_only=False, map_location="cpu")
     if isinstance(sd, dict) and "online" in sd:
         sd = sd["online"]
+    net = AtariQNet(N_ACTIONS, arch="nature" if "conv.4.weight" in sd else "nips")
     net.load_state_dict(sd)
     net.eval()
     return net
@@ -376,6 +385,9 @@ def main():
     p.add_argument("--out", default="results/mspacman/main_seed0")
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--threads", type=int, default=4)
+    p.add_argument("--device", default="auto", help="auto (cuda if available, else cpu), cpu, cuda, cuda:0, ...")
+    p.add_argument("--arch", choices=["nature", "nips"], default="nips",
+                   help="nips: Mnih et al. 2013 network (2.3x cheaper on CPU); nature: Mnih et al. 2015")
     p.add_argument("--max-episodes", type=int, default=5000)
     p.add_argument("--max-steps", type=int, default=10_000_000)
     p.add_argument("--time-limit-hours", type=float, default=1e9)

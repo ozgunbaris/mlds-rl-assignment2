@@ -56,18 +56,18 @@ def main():
         evp = os.path.join(d, "eval_periodic.csv")
         ev = read_csv(evp) if os.path.exists(evp) else None
         data[name] = (ep, held, ev)
-        viz.training_curve(ep["reward"], os.path.join(args.out, f"{name}_training.png"),
+        viz.training_curve(ep["reward"], os.path.join(args.out, f"mspacman_{name}_training.png"),
                            f"MsPacman-v5, Double DQN, {name}: score per training episode", ylabel="game score")
-        maxq_plot(ep, held, os.path.join(args.out, f"{name}_maxq.png"),
+        maxq_plot(ep, held, os.path.join(args.out, f"mspacman_{name}_maxq.png"),
                   f"MsPacman-v5, Double DQN, {name}: maximum Q-value per training episode")
         rp = os.path.join(d, f"eval_rewards_{args.eval_tag}.npy")
         if os.path.exists(rp):
             r = np.load(rp)
-            viz.reward_histogram(r, os.path.join(args.out, f"{name}_hist.png"),
+            viz.reward_histogram(r, os.path.join(args.out, f"mspacman_{name}_hist.png"),
                                  f"MsPacman-v5, {name}: 500 roll-out games of the final network (greedy)",
                                  bins=30, xlabel="game score")
     if len(data) > 1:
-        viz.compare_curves({k: v[0]["reward"] for k, v in data.items()}, os.path.join(args.out, "compare_seeds.png"),
+        viz.compare_curves({k: v[0]["reward"] for k, v in data.items()}, os.path.join(args.out, "mspacman_compare_seeds.png"),
                            "MsPacman-v5: 100-episode moving-average score of the two seeds", ylabel="game score (moving average)")
     # periodic greedy evaluation
     viz.setup()
@@ -83,7 +83,7 @@ def main():
     ax.set_ylabel("game score")
     ax.set_title("MsPacman-v5: greedy evaluation games during training")
     ax.legend(loc="upper left", fontsize=8)
-    fig.savefig(os.path.join(args.out, "eval_periodic.png"))
+    fig.savefig(os.path.join(args.out, "mspacman_eval_periodic.png"))
     plt.close(fig)
     # diagnostics
     fig, axes = plt.subplots(2, 2, figsize=(10, 6.5))
@@ -103,7 +103,7 @@ def main():
     for ax in axes.ravel():
         ax.set_xlabel("training episode")
         ax.legend(fontsize=7)
-    fig.savefig(os.path.join(args.out, "diagnostics.png"))
+    fig.savefig(os.path.join(args.out, "mspacman_diagnostics.png"))
     plt.close(fig)
     # action distribution over training (first run)
     name, (ep, _, _) = next(iter(data.items()))
@@ -118,7 +118,7 @@ def main():
     ax.set_ylim(0, 1)
     ax.set_title(f"MsPacman-v5, {name}: actions chosen during training")
     ax.legend(loc="center left", bbox_to_anchor=(1.0, 0.5), fontsize=8)
-    fig.savefig(os.path.join(args.out, "actions.png"))
+    fig.savefig(os.path.join(args.out, "mspacman_actions.png"))
     plt.close(fig)
     summ = {}
     for name, (ep, held, ev) in data.items():
