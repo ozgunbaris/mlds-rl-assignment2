@@ -1,0 +1,13 @@
+A.L.E: Arcade Learning Environment (version 0.12.1+8a8fafb)
+[Powered by Stella]
+P1 {'frames': 449, 'pixels_with_sum_448_in_crop': {'min': 7, 'max': 17, 'mean': 10.703786191536748, 'frames_with_none': 0}, 'pixels_with_sum_448_that_are_not_mspacman_colour_max': 0, 'value_range_preprocessed': [-128, 27]}
+P2 {'games': 100, 'mean': 245.1, 'std': 50.44789391044983, 'min': 140.0, 'max': 410.0, 'length_mean': 494.64}
+  snapshot ep 0: 332.0 +- 17.3
+  snapshot ep 100: 60.0 +- 0.0
+  snapshot ep 250: 335.0 +- 76.2
+  snapshot ep 500: 461.5 +- 47.5
+  snapshot ep 1000: 1000.0 +- 175.5
+P4 {"steps": 15142, "mean_pred": 6.821261882781982, "mean_true": 6.5492937526987545, "mean_bias": 0.2719679573470624, "corr": 0.24903562068012788, "bins_pred": [1.8509999513626099, 2.180000066757202, 3.697999954223633, 4.324999809265137, 4.913000106811523, 5.4039998054504395, 5.802999973297119, 6.15999
+P5 {'life lost': {'n': 40, 'q_at_-60': 7.3606743812561035, 'q_at_-10': 6.565113067626953, 'q_at_0': 5.8553996086120605, 'q_at_+10': 4.042421817779541}, 'power pellet eaten': {'n': 21, 'q_at_-60': 7.924477577209473, 'q_at_-10': 7.813259124755859, 'q_at_0': 7.177025318145752, 'q_at_+10': 7.011632919311523}, 'ghost eaten': {'n': 17, 'q_at_-60': 7.143918037414551, 'q_at_-10': 6.62860631942749, 'q_at_0': 6.633908271789551, 'q_at_+10': 6.548770427703857}}
+P7 {'sticky_0.0': {'scores': [870.0, 870.0, 870.0, 870.0, 870.0], 'lengths': [779, 779, 779, 779, 779]}, 'sticky_0.25': {'scores': [600.0, 710.0, 1140.0, 780.0, 1040.0], 'lengths': [745, 577, 633, 783, 783]}} {'steps_checked': 120, 'frozen_steps': 66, 'first_step_where_actions_matter': 66, 'action_gap_frozen_mean': 0.0809555577509331, 'action_gap_after_mean': 0.375414804176048, 'log_maxq_growth_per_frozen_step': 0.00021664558992622564, 'predicted_growth': 0.01005033585350145, 'maxq_first_and_last_frozen_step': [1.9704378843307495, 2.1590282917022705]}
+wrote results/mspacman/validation/validation.md (307 s)

@@ -86,7 +86,8 @@ def p_texts(v):
         parts = []
         for name, d in e.items():
             nice = {"life lost": "lost life", "power pellet eaten": "power pellet", "ghost eaten": "eaten ghost"}.get(name, name)
-            parts.append(f"around a {nice} (n = {d['n']}) the average $\\max_a Q$ is {d['q_at_-60']:.2f} sixty steps before, "
+            art = "an" if nice[0] in "aeiou" else "a"
+            parts.append(f"around {art} {nice} (n = {d['n']}) the average $\\max_a Q$ is {d['q_at_-60']:.2f} sixty steps before, "
                          f"{d['q_at_-10']:.2f} ten steps before, {d['q_at_0']:.2f} at the event and {d['q_at_+10']:.2f} ten steps after")
         L = e.get("life lost")
         extra = ""
@@ -125,9 +126,9 @@ def p_texts(v):
     if pos:
         items = list(pos.items())
         t["P8"] = ("Ms. Pac-Man's position was read from her colour in the raw frames of 10 greedy games per network. " +
-                   "; ".join(f"{'the network after ' + k if k.startswith('episode') else 'the ' + k} visited "
+                   "; ".join(f"{('the network after ' + k if k.startswith('episode') else 'the ' + k).capitalize() if i == 0 else ('the network after ' + k if k.startswith('episode') else 'the ' + k)} visited "
                              f"{100 * x['fraction_of_4x4_cells_visited']:.1f} % of the 4 x 4-pixel cells of the "
-                             f"screen ({x['positions']:,} positions)" for k, x in items) + ".")
+                             f"screen ({x['positions']:,} positions)" for i, (k, x) in enumerate(items)) + ".")
     cf, cr = v.get("P9_composition_final"), v.get("P9_composition_random")
     if cf and cr:
         t["P9"] = (f"Over 20 greedy games the final network scores {cf['mean_score']:.0f} per game, of which "

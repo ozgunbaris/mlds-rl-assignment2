@@ -1,0 +1,40 @@
+{
+  "main_seed0": {
+    "episodes": 1100,
+    "steps": 670642,
+    "first100_mean": 276.7,
+    "last100_mean": 1106.8,
+    "best_ma100": 1146.6,
+    "hours": 0.9169999999999999,
+    "rollout": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 968.84,
+      "std": 362.0301843769384,
+      "min": 460.0,
+      "max": 3100.0,
+      "median": 870.0,
+      "length_mean": 761.844,
+      "seed": 2026
+    }
+  },
+  "main_seed1": {
+    "episodes": 300,
+    "steps": 158928,
+    "first100_mean": 263.3,
+    "last100_mean": 511.9,
+    "best_ma100": 511.9,
+    "hours": 0.25077777777777777,
+    "rollout": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 141.2,
+      "std": 10.888526071052961,
+      "min": 140.0,
+      "max": 240.0,
+      "median": 140.0,
+      "length_mean": 531.216,
+      "seed": 2026
+    }
+  }
+}

@@ -38,7 +38,8 @@ Everything below is pushed to `main`.
   learning rate 0), validation in `results/cartpole/validation/`, figures in `results/cartpole/figures/`,
   preliminary tuning runs in `results/cartpole/preliminary/`. The report section is written. Kept networks:
   500.0, 495.4, 455.8, 500.0, 500.0 (3 of 5 seeds perfect over 500 roll-outs).
-- **Part (b) MsPacman: preliminary.** «HANDOFF_MSP»
+- **Part (b) MsPacman: preliminary.** Two runs of the Mnih et al. (2013) network on 4 CPU cores. A restart of the cloud machine stopped them; the reported networks are the last checkpoints: seed 0 after 1,100 games (0.92 h, 670,642 agent steps), 500 greedy games 968.8 +- 362.0 (random policy 245.1 +- 50.4); seed 1 after 300 games (0.25 h), 141.2 (its greedy policy is still stuck: 494 of 500 games score exactly 140). Validation P1-P9 for seed 0 is in `results/mspacman/validation/`, figures in `results/mspacman/figures/`, and the report text was generated from these files by `report/fill_mspacman.py`.
+  Continuation runs resumed from the two checkpoints at 13:13 UTC on 2026-11-05 in `results/mspacman/cont_seed0` (2 threads, 4 h total budget) and `results/mspacman/cont_seed1` (1 thread, 3 h), via `scripts/run_mspacman_continue.sh`; each evaluates 500 games when it ends. Whatever they reached is pushed; if a later session finds them complete (an `eval_summary_eps0.json` in the folder), it can rerun `validate_mspacman` / `make_plots_mspacman` on them and swap them into the report (the text describes main_seed0/main_seed1).
 - **Report:** `report/report.md` and `report/report.pdf` (built with `report/build.sh`) describe all of the above.
   The MsPacman sections describe the short cloud runs and must be updated after the cluster runs.
 
@@ -51,7 +52,7 @@ Everything below is pushed to `main`.
    500k frames). These defaults are meant for a run of about 5 million agent steps.
 2. Roll out 500 games per run (the job does this), run the validation and the plots on the Mac, and replace the
    MsPacman sections of `report/report.md` with the cluster results (the current text describes the short
-   1.7-hour cloud run; keep it as the "short run" comparison or remove it).
+   short cloud runs; keep them as the "short run" comparison or remove them).
 3. Rebuild `report/report.pdf` (`report/build.sh`, needs pandoc and xelatex) and push.
 
 ## 4. Cluster procedure

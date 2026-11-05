@@ -1,0 +1,35 @@
+device: cpu
+A.L.E: Arcade Learning Environment (version 0.12.1+8a8fafb)
+[Powered by Stella]
+ep    10 | step     4958 | score    400 | len   733 | eps 1.000 | qmax   0.06 | upd       0 |   870 sps |  0.00 h
+ep    20 | step     9756 | score    270 | len   517 | eps 1.000 | qmax   0.06 | upd       0 |   824 sps |  0.00 h
+ep    30 | step    14906 | score    230 | len   485 | eps 1.000 | qmax   0.06 | upd       0 |   892 sps |  0.00 h
+ep    40 | step    19580 | score    170 | len   431 | eps 1.000 | qmax   0.06 | upd       0 |   913 sps |  0.01 h
+ep    50 | step    24614 | score    280 | len   499 | eps 0.983 | qmax   0.13 | upd    1153 |   175 sps |  0.01 h
+ep    60 | step    29688 | score    300 | len   473 | eps 0.965 | qmax   0.16 | upd    2422 |   172 sps |  0.02 h
+ep    70 | step    34442 | score    220 | len   477 | eps 0.948 | qmax   0.25 | upd    3610 |   157 sps |  0.03 h
+ep    80 | step    39076 | score    190 | len   377 | eps 0.931 | qmax   0.26 | upd    4769 |   159 sps |  0.04 h
+ep    90 | step    44046 | score    280 | len   513 | eps 0.913 | qmax   0.31 | upd    6011 |   162 sps |  0.05 h
+ep   100 | step    49472 | score    260 | len   539 | eps 0.894 | qmax   0.40 | upd    7368 |   160 sps |  0.06 h
+ep   110 | step    54610 | score    720 | len   773 | eps 0.875 | qmax   0.61 | upd    8652 |   161 sps |  0.07 h
+ep   120 | step    59576 | score    250 | len   425 | eps 0.858 | qmax   0.61 | upd    9894 |   161 sps |  0.08 h
+ep   130 | step    64982 | score    210 | len   489 | eps 0.838 | qmax   0.71 | upd   11245 |   162 sps |  0.08 h
+ep   140 | step    70042 | score    170 | len   405 | eps 0.820 | qmax   0.80 | upd   12510 |   162 sps |  0.09 h
+ep   150 | step    74982 | score    160 | len   367 | eps 0.802 | qmax   0.81 | upd   13745 |   148 sps |  0.10 h
+ep   160 | step    80376 | score   1170 | len   813 | eps 0.783 | qmax   0.86 | upd   15094 |   144 sps |  0.11 h
+ep   170 | step    85872 | score    300 | len   509 | eps 0.763 | qmax   1.06 | upd   16468 |   151 sps |  0.12 h
+ep   180 | step    91056 | score    460 | len   467 | eps 0.744 | qmax   1.42 | upd   17764 |   157 sps |  0.13 h
+ep   190 | step    96148 | score    210 | len   377 | eps 0.726 | qmax   1.15 | upd   19037 |   152 sps |  0.14 h
+ep   200 | step   100878 | score    250 | len   441 | eps 0.709 | qmax   1.37 | upd   20219 |   150 sps |  0.15 h
+ep   210 | step   106596 | score    340 | len   495 | eps 0.688 | qmax   1.37 | upd   21649 |   163 sps |  0.16 h
+ep   220 | step   111886 | score    380 | len   715 | eps 0.669 | qmax   1.21 | upd   22971 |   159 sps |  0.17 h
+ep   230 | step   118256 | score    280 | len   457 | eps 0.646 | qmax   1.41 | upd   24564 |   153 sps |  0.18 h
+ep   240 | step   124986 | score    500 | len   653 | eps 0.622 | qmax   1.57 | upd   26246 |   162 sps |  0.19 h
+ep   250 | step   130250 | score    370 | len   527 | eps 0.603 | qmax   1.62 | upd   27562 |   167 sps |  0.20 h
+ep   260 | step   136082 | score    620 | len   661 | eps 0.582 | qmax   1.36 | upd   29020 |   169 sps |  0.21 h
+ep   270 | step   140920 | score    170 | len   471 | eps 0.565 | qmax   1.95 | upd   30230 |   151 sps |  0.22 h
+ep   280 | step   147430 | score    930 | len  1027 | eps 0.541 | qmax   1.36 | upd   31857 |   160 sps |  0.23 h
+ep   290 | step   153232 | score    290 | len   499 | eps 0.520 | qmax   1.75 | upd   33308 |   159 sps |  0.24 h
+ep   300 | step   158928 | score    290 | len   467 | eps 0.500 | qmax   1.88 | upd   34732 |   158 sps |  0.25 h
+ep   310 | step   165132 | score    710 | len   617 | eps 0.478 | qmax   1.88 | upd   36283 |   165 sps |  0.26 h
+ep   320 | step   171136 | score    810 | len   741 | eps 0.456 | qmax   1.76 | upd   37784 |   155 sps |  0.27 h
