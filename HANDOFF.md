@@ -28,7 +28,19 @@ cluster). The previous session ran in a cloud container with 4 CPU cores and no 
 
 ## 2. State at handoff
 
-«HANDOFF_STATE»
+Everything below is pushed to `main`.
+
+- **Code** (complete, `python -m pytest tests -q` passes 11 checks): `dqn/` (shared Double DQN core, replay buffers,
+  networks, CartPole and MsPacman trainers, chain-MDP test problem, plotting and validation scripts), `scripts/`
+  (experiment loops, Nomad job generator `scripts/nomad/make_job.sh` + `scripts/nomad/run.sh`, fetch script).
+- **Part (a) CartPole: done.** 23 runs in `results/cartpole/` (5 main seeds; ablations: no target network x3,
+  no replay x3, DQN target x3, time limit as terminal x2, gamma 0.9 x2, gamma 0.99 x2, reward x2, reward x(-1),
+  learning rate 0), validation in `results/cartpole/validation/`, figures in `results/cartpole/figures/`,
+  preliminary tuning runs in `results/cartpole/preliminary/`. The report section is written. Kept networks:
+  500.0, 495.4, 455.8, 500.0, 500.0 (3 of 5 seeds perfect over 500 roll-outs).
+- **Part (b) MsPacman: preliminary.** «HANDOFF_MSP»
+- **Report:** `report/report.md` and `report/report.pdf` (built with `report/build.sh`) describe all of the above.
+  The MsPacman sections describe the short cloud runs and must be updated after the cluster runs.
 
 ## 3. What remains
 

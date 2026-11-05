@@ -29,7 +29,7 @@ One run trains for 1000 episodes, checks the greedy policy on 20 separate evalua
 ```bash
 python -m dqn.cartpole_dqn --out results/cartpole/main_seed0 --seed 0 --episodes 1000 --eps-final 0.1 \
     --no-stop-when-solved --eval-periodic-episodes 20
-scripts/run_cartpole.sh                                                          # all 24 runs of the report
+scripts/run_cartpole.sh                                                          # all 23 runs of the report
 python -m dqn.make_plots_cartpole --results results/cartpole --out results/cartpole/figures
 python -m dqn.validate_cartpole --results results/cartpole --out results/cartpole/validation
 ```

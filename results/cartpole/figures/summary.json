@@ -242,7 +242,58 @@
       },
       "seed": 1001
     },
-    "eval_selected": null
+    "eval_selected": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 500.0,
+      "std": 0.0,
+      "min": 500.0,
+      "max": 500.0,
+      "solved_fraction": 1.0,
+      "ends": {
+        "angle": 0,
+        "position": 0,
+        "time limit": 500
+      },
+      "seed": 1001
+    }
+  },
+  {
+    "run": "dqn_seed2",
+    "group": "dqn",
+    "episodes": 1000,
+    "steps": 87985,
+    "final_ma100": 191.54,
+    "eval": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 500.0,
+      "std": 0.0,
+      "min": 500.0,
+      "max": 500.0,
+      "solved_fraction": 1.0,
+      "ends": {
+        "angle": 0,
+        "position": 0,
+        "time limit": 500
+      },
+      "seed": 1002
+    },
+    "eval_selected": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 500.0,
+      "std": 0.0,
+      "min": 500.0,
+      "max": 500.0,
+      "solved_fraction": 1.0,
+      "ends": {
+        "angle": 0,
+        "position": 0,
+        "time limit": 500
+      },
+      "seed": 1002
+    }
   },
   {
     "run": "notarget_seed0",
@@ -538,6 +589,265 @@
         "time limit": 489
       },
       "seed": 1001
+    }
+  },
+  {
+    "run": "gamma0.9_seed0",
+    "group": "gamma0.9",
+    "episodes": 1000,
+    "steps": 68806,
+    "final_ma100": 95.21,
+    "eval": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 134.672,
+      "std": 56.139829141172136,
+      "min": 85.0,
+      "max": 269.0,
+      "solved_fraction": 0.0,
+      "ends": {
+        "angle": 0,
+        "position": 500,
+        "time limit": 0
+      },
+      "seed": 1000
+    },
+    "eval_selected": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 500.0,
+      "std": 0.0,
+      "min": 500.0,
+      "max": 500.0,
+      "solved_fraction": 1.0,
+      "ends": {
+        "angle": 0,
+        "position": 0,
+        "time limit": 500
+      },
+      "seed": 1000
+    }
+  },
+  {
+    "run": "gamma0.9_seed1",
+    "group": "gamma0.9",
+    "episodes": 1000,
+    "steps": 57302,
+    "final_ma100": 95.93,
+    "eval": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 91.626,
+      "std": 2.5702381212642536,
+      "min": 85.0,
+      "max": 98.0,
+      "solved_fraction": 0.0,
+      "ends": {
+        "angle": 0,
+        "position": 500,
+        "time limit": 0
+      },
+      "seed": 1001
+    },
+    "eval_selected": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 500.0,
+      "std": 0.0,
+      "min": 500.0,
+      "max": 500.0,
+      "solved_fraction": 1.0,
+      "ends": {
+        "angle": 0,
+        "position": 0,
+        "time limit": 500
+      },
+      "seed": 1001
+    }
+  },
+  {
+    "run": "gamma0.99_seed0",
+    "group": "gamma0.99",
+    "episodes": 1000,
+    "steps": 62243,
+    "final_ma100": 75.24,
+    "eval": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 93.65,
+      "std": 3.12593985866651,
+      "min": 87.0,
+      "max": 103.0,
+      "solved_fraction": 0.0,
+      "ends": {
+        "angle": 0,
+        "position": 500,
+        "time limit": 0
+      },
+      "seed": 1000
+    },
+    "eval_selected": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 500.0,
+      "std": 0.0,
+      "min": 500.0,
+      "max": 500.0,
+      "solved_fraction": 1.0,
+      "ends": {
+        "angle": 0,
+        "position": 0,
+        "time limit": 500
+      },
+      "seed": 1000
+    }
+  },
+  {
+    "run": "gamma0.99_seed1",
+    "group": "gamma0.99",
+    "episodes": 1000,
+    "steps": 55145,
+    "final_ma100": 78.5,
+    "eval": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 97.742,
+      "std": 3.138699730780248,
+      "min": 91.0,
+      "max": 107.0,
+      "solved_fraction": 0.0,
+      "ends": {
+        "angle": 0,
+        "position": 500,
+        "time limit": 0
+      },
+      "seed": 1001
+    },
+    "eval_selected": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 496.344,
+      "std": 12.207279139923031,
+      "min": 429.0,
+      "max": 500.0,
+      "solved_fraction": 0.884,
+      "ends": {
+        "angle": 58,
+        "position": 0,
+        "time limit": 442
+      },
+      "seed": 1001
+    }
+  },
+  {
+    "run": "rscale2_seed0",
+    "group": "rscale2",
+    "episodes": 1000,
+    "steps": 75722,
+    "final_ma100": 165.2,
+    "eval": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 211.938,
+      "std": 155.55245467687098,
+      "min": 91.0,
+      "max": 500.0,
+      "solved_fraction": 0.152,
+      "ends": {
+        "angle": 0,
+        "position": 424,
+        "time limit": 76
+      },
+      "seed": 1000
+    },
+    "eval_selected": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 500.0,
+      "std": 0.0,
+      "min": 500.0,
+      "max": 500.0,
+      "solved_fraction": 1.0,
+      "ends": {
+        "angle": 0,
+        "position": 0,
+        "time limit": 500
+      },
+      "seed": 1000
+    }
+  },
+  {
+    "run": "rscale-1_seed0",
+    "group": "rscale-1",
+    "episodes": 300,
+    "steps": 5975,
+    "final_ma100": 17.36,
+    "eval": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 8.758,
+      "std": 0.4282942913464993,
+      "min": 8.0,
+      "max": 9.0,
+      "solved_fraction": 0.0,
+      "ends": {
+        "angle": 500,
+        "position": 0,
+        "time limit": 0
+      },
+      "seed": 1000
+    },
+    "eval_selected": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 129.522,
+      "std": 11.733265359651593,
+      "min": 70.0,
+      "max": 145.0,
+      "solved_fraction": 0.0,
+      "ends": {
+        "angle": 79,
+        "position": 421,
+        "time limit": 0
+      },
+      "seed": 1000
+    }
+  },
+  {
+    "run": "lr0_seed0",
+    "group": "lr0",
+    "episodes": 300,
+    "steps": 7244,
+    "final_ma100": 28.0,
+    "eval": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 129.522,
+      "std": 11.733265359651593,
+      "min": 70.0,
+      "max": 145.0,
+      "solved_fraction": 0.0,
+      "ends": {
+        "angle": 79,
+        "position": 421,
+        "time limit": 0
+      },
+      "seed": 1000
+    },
+    "eval_selected": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 129.522,
+      "std": 11.733265359651593,
+      "min": 70.0,
+      "max": 145.0,
+      "solved_fraction": 0.0,
+      "ends": {
+        "angle": 79,
+        "position": 421,
+        "time limit": 0
+      },
+      "seed": 1000
     }
   }
 ]

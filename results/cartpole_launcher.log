@@ -1,0 +1,27 @@
+05:11:20 done results/cartpole/main_seed0: results/cartpole/main_seed0/eval_summary_greedy.json:"mean": 173.428 results/cartpole/main_seed0/eval_summary_greedy_best.json:"mean": 500.0 
+05:13:05 done results/cartpole/main_seed1: results/cartpole/main_seed1/eval_summary_greedy.json:"mean": 98.002 results/cartpole/main_seed1/eval_summary_greedy_best.json:"mean": 495.354 
+05:14:48 done results/cartpole/main_seed2: results/cartpole/main_seed2/eval_summary_greedy.json:"mean": 88.642 results/cartpole/main_seed2/eval_summary_greedy_best.json:"mean": 455.84 
+05:16:49 done results/cartpole/main_seed3: results/cartpole/main_seed3/eval_summary_greedy.json:"mean": 103.928 results/cartpole/main_seed3/eval_summary_greedy_best.json:"mean": 500.0 
+05:18:26 done results/cartpole/main_seed4: results/cartpole/main_seed4/eval_summary_greedy.json:"mean": 98.3 results/cartpole/main_seed4/eval_summary_greedy_best.json:"mean": 500.0 
+05:20:36 done results/cartpole/truncterm_seed0: results/cartpole/truncterm_seed0/eval_summary_greedy.json:"mean": 470.62 results/cartpole/truncterm_seed0/eval_summary_greedy_best.json:"mean": 500.0 
+05:22:21 done results/cartpole/truncterm_seed1: results/cartpole/truncterm_seed1/eval_summary_greedy.json:"mean": 98.002 results/cartpole/truncterm_seed1/eval_summary_greedy_best.json:"mean": 495.354 
+Terminated
+grep: results/cartpole/truncterm_seed2/eval_summary_greedy*.json: No such file or directory
+05:22:57 done results/cartpole/truncterm_seed2: 
+05:23:24 done results/cartpole/notarget_seed0: results/cartpole/notarget_seed0/eval_summary_greedy.json:"mean": 9.324 results/cartpole/notarget_seed0/eval_summary_greedy_best.json:"mean": 129.522 
+05:23:48 done results/cartpole/notarget_seed1: results/cartpole/notarget_seed1/eval_summary_greedy.json:"mean": 9.352 results/cartpole/notarget_seed1/eval_summary_greedy_best.json:"mean": 9.352 
+05:24:13 done results/cartpole/notarget_seed2: results/cartpole/notarget_seed2/eval_summary_greedy.json:"mean": 9.354 results/cartpole/notarget_seed2/eval_summary_greedy_best.json:"mean": 9.354 
+05:26:19 done results/cartpole/noreplay_seed0: results/cartpole/noreplay_seed0/eval_summary_greedy.json:"mean": 89.898 results/cartpole/noreplay_seed0/eval_summary_greedy_best.json:"mean": 500.0 
+05:28:45 done results/cartpole/noreplay_seed1: results/cartpole/noreplay_seed1/eval_summary_greedy.json:"mean": 145.546 results/cartpole/noreplay_seed1/eval_summary_greedy_best.json:"mean": 500.0 
+05:31:34 done results/cartpole/noreplay_seed2: results/cartpole/noreplay_seed2/eval_summary_greedy.json:"mean": 103.26 results/cartpole/noreplay_seed2/eval_summary_greedy_best.json:"mean": 500.0 
+05:33:33 done results/cartpole/dqn_seed0: results/cartpole/dqn_seed0/eval_summary_greedy.json:"mean": 155.768 results/cartpole/dqn_seed0/eval_summary_greedy_best.json:"mean": 500.0 
+05:35:13 done results/cartpole/dqn_seed1: results/cartpole/dqn_seed1/eval_summary_greedy.json:"mean": 96.63 results/cartpole/dqn_seed1/eval_summary_greedy_best.json:"mean": 500.0 
+05:37:52 done results/cartpole/dqn_seed2: results/cartpole/dqn_seed2/eval_summary_greedy.json:"mean": 500.0 results/cartpole/dqn_seed2/eval_summary_greedy_best.json:"mean": 500.0 
+05:39:47 done results/cartpole/gamma0.99_seed0: results/cartpole/gamma0.99_seed0/eval_summary_greedy.json:"mean": 93.65 results/cartpole/gamma0.99_seed0/eval_summary_greedy_best.json:"mean": 500.0 
+05:41:28 done results/cartpole/gamma0.99_seed1: results/cartpole/gamma0.99_seed1/eval_summary_greedy.json:"mean": 97.742 results/cartpole/gamma0.99_seed1/eval_summary_greedy_best.json:"mean": 496.344 
+05:43:33 done results/cartpole/gamma0.9_seed0: results/cartpole/gamma0.9_seed0/eval_summary_greedy.json:"mean": 134.672 results/cartpole/gamma0.9_seed0/eval_summary_greedy_best.json:"mean": 500.0 
+05:45:18 done results/cartpole/gamma0.9_seed1: results/cartpole/gamma0.9_seed1/eval_summary_greedy.json:"mean": 91.626 results/cartpole/gamma0.9_seed1/eval_summary_greedy_best.json:"mean": 500.0 
+05:47:39 done results/cartpole/rscale2_seed0: results/cartpole/rscale2_seed0/eval_summary_greedy.json:"mean": 211.938 results/cartpole/rscale2_seed0/eval_summary_greedy_best.json:"mean": 500.0 
+05:47:53 done results/cartpole/rscale-1_seed0: results/cartpole/rscale-1_seed0/eval_summary_greedy.json:"mean": 8.758 results/cartpole/rscale-1_seed0/eval_summary_greedy_best.json:"mean": 129.522 
+05:48:11 done results/cartpole/lr0_seed0: results/cartpole/lr0_seed0/eval_summary_greedy.json:"mean": 129.522 results/cartpole/lr0_seed0/eval_summary_greedy_best.json:"mean": 129.522 
+ALL DONE 05:48:11

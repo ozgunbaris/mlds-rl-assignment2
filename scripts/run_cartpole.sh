@@ -15,7 +15,7 @@ run() {  # run <name> <seed> [extra args]
   echo "$(date -u +%H:%M:%S) done $d: $(grep -o '"mean": [0-9.]*' $d/eval_summary_greedy*.json | tr '\n' ' ')"
 }
 for s in 0 1 2 3 4; do run main $s; done
-for s in 0 1 2; do run truncterm $s --truncation-terminal; done
+for s in 0 1; do run truncterm $s --truncation-terminal; done   # seed 2 was stopped: identical to main_seed2 (no truncation reached)
 for s in 0 1 2; do run notarget $s --no-target; done
 for s in 0 1 2; do run noreplay $s --buffer-size 64; done
 for s in 0 1 2; do run dqn $s --no-double; done

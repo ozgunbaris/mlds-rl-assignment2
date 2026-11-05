@@ -1,0 +1,3 @@
+ep  250 | step    5107 | reward    18 | eps 0.815 | qmax  -4.56 | held-out  -5.24 |    6.5s
+eval final network (greedy): {"episodes": 500, "epsilon": 0.0, "mean": 8.758, "std": 0.4282942913464993, "min": 8.0, "max": 9.0, "solved_fraction": 0.0, "ends": {"angle": 500, "position": 0, "time limit": 0}, "seed": 1000}
+eval selected network (greedy): {"episodes": 500, "epsilon": 0.0, "mean": 129.522, "std": 11.733265359651593, "min": 70.0, "max": 145.0, "solved_fraction": 0.0, "ends": {"angle": 79, "position": 421, "time limit": 0}, "seed": 1000}

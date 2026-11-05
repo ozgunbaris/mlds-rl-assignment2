@@ -25,6 +25,24 @@
 | main_seed2 | 0.95 | 88.6 | 3.0 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 455.84 | 89.5 | 19.88 | 18.39 | None |
 | main_seed3 | 0.95 | 103.9 | 9.3 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 500.0 | 88.3 | 19.78 | 18.71 | None |
 | main_seed4 | 0.95 | 98.3 | 3.0 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 500.0 | 101.4 | 20.37 | 18.55 | None |
+| dqn_seed0 | 0.95 | 155.8 | 19.1 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 500.0 | 119.2 | 20.02 | 18.32 | None |
+| dqn_seed1 | 0.95 | 96.6 | 5.4 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 500.0 | 68.5 | 20.12 | 18.73 | None |
+| dqn_seed2 | 0.95 | 500.0 | 0.0 | 1.000 | {'angle': 0, 'position': 0, 'time limit': 500} | 500.0 | 191.5 | 19.86 | 18.12 | None |
+| notarget_seed0 | 0.95 | 9.3 | 0.7 | 0.000 | {'angle': 499, 'position': 1, 'time limit': 0} | 129.522 | 11.6 | 1372077.86 | 847337.88 | None |
+| notarget_seed1 | 0.95 | 9.4 | 0.7 | 0.000 | {'angle': 500, 'position': 0, 'time limit': 0} | 9.352 | 12.1 | 1506955.24 | 1095242.17 | None |
+| notarget_seed2 | 0.95 | 9.4 | 0.8 | 0.000 | {'angle': 500, 'position': 0, 'time limit': 0} | 9.354 | 11.2 | 1686336.84 | 1195060.65 | None |
+| noreplay_seed0 | 0.95 | 89.9 | 4.8 | 0.000 | {'angle': 98, 'position': 402, 'time limit': 0} | 500.0 | 96.0 | 16.86 | 17.31 | None |
+| noreplay_seed1 | 0.95 | 145.5 | 3.8 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 500.0 | 109.8 | 16.91 | 18.18 | None |
+| noreplay_seed2 | 0.95 | 103.3 | 3.5 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 500.0 | 109.9 | 18.52 | 18.08 | None |
+| truncterm_seed0 | 0.95 | 470.6 | 74.8 | 0.828 | {'angle': 0, 'position': 86, 'time limit': 414} | 500.0 | 127.8 | 19.55 | 18.20 | None |
+| truncterm_seed1 | 0.95 | 98.0 | 3.4 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 495.354 | 85.7 | 19.85 | 18.56 | None |
+| gamma0.9_seed0 | 0.9 | 134.7 | 56.1 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 500.0 | 95.2 | 9.78 | 9.05 | None |
+| gamma0.9_seed1 | 0.9 | 91.6 | 2.6 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 500.0 | 95.9 | 9.68 | 9.20 | None |
+| gamma0.99_seed0 | 0.99 | 93.7 | 3.1 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 500.0 | 75.2 | 73.47 | 65.99 | None |
+| gamma0.99_seed1 | 0.99 | 97.7 | 3.1 | 0.000 | {'angle': 0, 'position': 500, 'time limit': 0} | 496.344 | 78.5 | 76.18 | 65.14 | None |
+| rscale2_seed0 | 0.95 | 211.9 | 155.6 | 0.152 | {'angle': 0, 'position': 424, 'time limit': 76} | 500.0 | 165.2 | 39.74 | 36.38 | None |
+| rscale-1_seed0 | 0.95 | 8.8 | 0.4 | 0.000 | {'angle': 500, 'position': 0, 'time limit': 0} | 129.522 | 17.4 | -4.86 | -5.13 | None |
+| lr0_seed0 | 0.95 | 129.5 | 11.7 | 0.000 | {'angle': 79, 'position': 421, 'time limit': 0} | 129.522 | 28.0 | -0.01 | 0.01 | None |
 
 ## C3 overestimation
 

@@ -312,6 +312,348 @@
         "heldout_last100": 18.547399044036865,
         "episodes_to_ma475": null
       }
+    ],
+    "dqn": [
+      {
+        "run": "dqn_seed0",
+        "gamma": 0.95,
+        "eval_mean": 155.768,
+        "eval_std": 19.086387190875072,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 0,
+          "position": 500,
+          "time limit": 0
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 119.24,
+        "qmax_last100": 20.02496862509789,
+        "heldout_last100": 18.315698127746582,
+        "episodes_to_ma475": null
+      },
+      {
+        "run": "dqn_seed1",
+        "gamma": 0.95,
+        "eval_mean": 96.63,
+        "eval_std": 5.378577878956481,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 0,
+          "position": 500,
+          "time limit": 0
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 68.54,
+        "qmax_last100": 20.12453551741571,
+        "heldout_last100": 18.733470497131346,
+        "episodes_to_ma475": null
+      },
+      {
+        "run": "dqn_seed2",
+        "gamma": 0.95,
+        "eval_mean": 500.0,
+        "eval_std": 0.0,
+        "solved_fraction": 1.0,
+        "ends": {
+          "angle": 0,
+          "position": 0,
+          "time limit": 500
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 191.54,
+        "qmax_last100": 19.855879054457674,
+        "heldout_last100": 18.12066385269165,
+        "episodes_to_ma475": null
+      }
+    ],
+    "notarget": [
+      {
+        "run": "notarget_seed0",
+        "gamma": 0.95,
+        "eval_mean": 9.324,
+        "eval_std": 0.7314533477946492,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 499,
+          "position": 1,
+          "time limit": 0
+        },
+        "best_eval_mean": 129.522,
+        "best_solved_fraction": 0.0,
+        "final_ma100": 11.61,
+        "qmax_last100": 1372077.8623494534,
+        "heldout_last100": 847337.878125,
+        "episodes_to_ma475": null
+      },
+      {
+        "run": "notarget_seed1",
+        "gamma": 0.95,
+        "eval_mean": 9.352,
+        "eval_std": 0.7376286328498914,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 500,
+          "position": 0,
+          "time limit": 0
+        },
+        "best_eval_mean": 9.352,
+        "best_solved_fraction": 0.0,
+        "final_ma100": 12.12,
+        "qmax_last100": 1506955.2416054108,
+        "heldout_last100": 1095242.17125,
+        "episodes_to_ma475": null
+      },
+      {
+        "run": "notarget_seed2",
+        "gamma": 0.95,
+        "eval_mean": 9.354,
+        "eval_std": 0.8128247043489759,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 500,
+          "position": 0,
+          "time limit": 0
+        },
+        "best_eval_mean": 9.354,
+        "best_solved_fraction": 0.0,
+        "final_ma100": 11.15,
+        "qmax_last100": 1686336.8356501914,
+        "heldout_last100": 1195060.65125,
+        "episodes_to_ma475": null
+      }
+    ],
+    "noreplay": [
+      {
+        "run": "noreplay_seed0",
+        "gamma": 0.95,
+        "eval_mean": 89.898,
+        "eval_std": 4.80037456871857,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 98,
+          "position": 402,
+          "time limit": 0
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 95.99,
+        "qmax_last100": 16.863618926763028,
+        "heldout_last100": 17.306678199768065,
+        "episodes_to_ma475": null
+      },
+      {
+        "run": "noreplay_seed1",
+        "gamma": 0.95,
+        "eval_mean": 145.546,
+        "eval_std": 3.8465418235084874,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 0,
+          "position": 500,
+          "time limit": 0
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 109.79,
+        "qmax_last100": 16.913312095659794,
+        "heldout_last100": 18.179720211029053,
+        "episodes_to_ma475": null
+      },
+      {
+        "run": "noreplay_seed2",
+        "gamma": 0.95,
+        "eval_mean": 103.26,
+        "eval_std": 3.487749991040068,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 0,
+          "position": 500,
+          "time limit": 0
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 109.94,
+        "qmax_last100": 18.52454733840978,
+        "heldout_last100": 18.07739595413208,
+        "episodes_to_ma475": null
+      }
+    ],
+    "truncterm": [
+      {
+        "run": "truncterm_seed0",
+        "gamma": 0.95,
+        "eval_mean": 470.62,
+        "eval_std": 74.82884203300222,
+        "solved_fraction": 0.828,
+        "ends": {
+          "angle": 0,
+          "position": 86,
+          "time limit": 414
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 127.77,
+        "qmax_last100": 19.55024413214308,
+        "heldout_last100": 18.196024475097655,
+        "episodes_to_ma475": null
+      },
+      {
+        "run": "truncterm_seed1",
+        "gamma": 0.95,
+        "eval_mean": 98.002,
+        "eval_std": 3.438312958414344,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 0,
+          "position": 500,
+          "time limit": 0
+        },
+        "best_eval_mean": 495.354,
+        "best_solved_fraction": 0.978,
+        "final_ma100": 85.65,
+        "qmax_last100": 19.849251138335596,
+        "heldout_last100": 18.562125701904296,
+        "episodes_to_ma475": null
+      }
+    ],
+    "gamma0.9": [
+      {
+        "run": "gamma0.9_seed0",
+        "gamma": 0.9,
+        "eval_mean": 134.672,
+        "eval_std": 56.139829141172136,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 0,
+          "position": 500,
+          "time limit": 0
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 95.21,
+        "qmax_last100": 9.784869599778462,
+        "heldout_last100": 9.046153554916382,
+        "episodes_to_ma475": null
+      },
+      {
+        "run": "gamma0.9_seed1",
+        "gamma": 0.9,
+        "eval_mean": 91.626,
+        "eval_std": 2.5702381212642536,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 0,
+          "position": 500,
+          "time limit": 0
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 95.93,
+        "qmax_last100": 9.68347018133664,
+        "heldout_last100": 9.204333457946777,
+        "episodes_to_ma475": null
+      }
+    ],
+    "gamma0.99": [
+      {
+        "run": "gamma0.99_seed0",
+        "gamma": 0.99,
+        "eval_mean": 93.65,
+        "eval_std": 3.12593985866651,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 0,
+          "position": 500,
+          "time limit": 0
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 75.24,
+        "qmax_last100": 73.47379215790815,
+        "heldout_last100": 65.99023433685302,
+        "episodes_to_ma475": null
+      },
+      {
+        "run": "gamma0.99_seed1",
+        "gamma": 0.99,
+        "eval_mean": 97.742,
+        "eval_std": 3.138699730780248,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 0,
+          "position": 500,
+          "time limit": 0
+        },
+        "best_eval_mean": 496.344,
+        "best_solved_fraction": 0.884,
+        "final_ma100": 78.5,
+        "qmax_last100": 76.17546484219397,
+        "heldout_last100": 65.13922317504883,
+        "episodes_to_ma475": null
+      }
+    ],
+    "rscale2": [
+      {
+        "run": "rscale2_seed0",
+        "gamma": 0.95,
+        "eval_mean": 211.938,
+        "eval_std": 155.55245467687098,
+        "solved_fraction": 0.152,
+        "ends": {
+          "angle": 0,
+          "position": 424,
+          "time limit": 76
+        },
+        "best_eval_mean": 500.0,
+        "best_solved_fraction": 1.0,
+        "final_ma100": 165.2,
+        "qmax_last100": 39.73851701993689,
+        "heldout_last100": 36.383478050231936,
+        "episodes_to_ma475": null
+      }
+    ],
+    "rscale-1": [
+      {
+        "run": "rscale-1_seed0",
+        "gamma": 0.95,
+        "eval_mean": 8.758,
+        "eval_std": 0.4282942913464993,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 500,
+          "position": 0,
+          "time limit": 0
+        },
+        "best_eval_mean": 129.522,
+        "best_solved_fraction": 0.0,
+        "final_ma100": 17.36,
+        "qmax_last100": -4.86109555700226,
+        "heldout_last100": -5.134665269851684,
+        "episodes_to_ma475": null
+      }
+    ],
+    "lr0": [
+      {
+        "run": "lr0_seed0",
+        "gamma": 0.95,
+        "eval_mean": 129.522,
+        "eval_std": 11.733265359651593,
+        "solved_fraction": 0.0,
+        "ends": {
+          "angle": 79,
+          "position": 421,
+          "time limit": 0
+        },
+        "best_eval_mean": 129.522,
+        "best_solved_fraction": 0.0,
+        "final_ma100": 28.0,
+        "qmax_last100": -0.012452040685532488,
+        "heldout_last100": 0.005511771887540817,
+        "episodes_to_ma475": null
+      }
     ]
   },
   "network_run": "main_seed0",
