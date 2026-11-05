@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.tmp
+report/*.aux
+report/*.log
+report/*.out
+report/report_build.md
+.DS_Store
+# full training checkpoints (optimizer + target network) are large; final weights and snapshots are kept
+results/mspacman/*/checkpoint.pt
