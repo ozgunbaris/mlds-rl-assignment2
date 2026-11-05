@@ -34,3 +34,19 @@ ep  1390 | step   865754 | score    510 | len   405 | eps 0.056 | qmax   7.99 | 
 ep  1400 | step   873214 | score   1000 | len   683 | eps 0.056 | qmax   7.47 | upd  200803 |   138 sps |  1.27 h
 ep  1410 | step   879980 | score    460 | len   425 | eps 0.055 | qmax   7.70 | upd  202495 |   145 sps |  1.29 h
 ep  1420 | step   887296 | score   1770 | len   737 | eps 0.055 | qmax   7.15 | upd  204324 |   153 sps |  1.30 h
+device: cpu
+resumed from episode 1400, step 873214, updates 200803; refilling the buffer until step 923214
+A.L.E: Arcade Learning Environment (version 0.12.1+8a8fafb)
+[Powered by Stella]
+ep  1410 | step   880284 | score    900 | len   627 | eps 0.055 | qmax   7.61 | upd  200803 |   782 sps |  1.28 h
+ep  1420 | step   887294 | score    560 | len   471 | eps 0.055 | qmax   8.19 | upd  200803 |   773 sps |  1.28 h
+ep  1430 | step   895282 | score   1350 | len   969 | eps 0.054 | qmax   5.72 | upd  200803 |   681 sps |  1.28 h
+ep  1440 | step   902738 | score   1050 | len   713 | eps 0.054 | qmax   7.35 | upd  200803 |   717 sps |  1.29 h
+ep  1450 | step   910078 | score   1020 | len   655 | eps 0.053 | qmax   7.11 | upd  200803 |   723 sps |  1.29 h
+ep  1460 | step   917168 | score   1480 | len   717 | eps 0.053 | qmax   6.51 | upd  200803 |   792 sps |  1.29 h
+ep  1470 | step   925126 | score    850 | len   631 | eps 0.052 | qmax   7.22 | upd  201281 |   171 sps |  1.30 h
+ep  1480 | step   931636 | score   1910 | len  1127 | eps 0.052 | qmax   6.00 | upd  202909 |   152 sps |  1.31 h
+ep  1490 | step   938030 | score   1320 | len   721 | eps 0.051 | qmax   8.82 | upd  204507 |   169 sps |  1.32 h
+ep  1500 | step   945654 | score   1440 | len   731 | eps 0.051 | qmax   7.36 | upd  206413 |   161 sps |  1.34 h
+ep  1510 | step   952344 | score   1420 | len   595 | eps 0.050 | qmax   8.78 | upd  208086 |   165 sps |  1.35 h
+ep  1520 | step   958990 | score    990 | len   699 | eps 0.050 | qmax   7.04 | upd  209747 |   171 sps |  1.36 h

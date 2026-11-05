@@ -32,3 +32,21 @@ ep   570 | step   336038 | score    530 | len   573 | eps 0.095 | qmax   2.71 | 
 ep   580 | step   342094 | score   1460 | len   793 | eps 0.095 | qmax   2.77 | upd   68023 |   100 sps |  0.60 h
 ep   590 | step   348436 | score    820 | len   577 | eps 0.094 | qmax   4.33 | upd   69609 |   100 sps |  0.62 h
 ep   600 | step   353914 | score    640 | len   471 | eps 0.094 | qmax   3.69 | upd   70978 |   103 sps |  0.64 h
+device: cpu
+resumed from episode 600, step 353914, updates 70978; refilling the buffer until step 403914
+A.L.E: Arcade Learning Environment (version 0.12.1+8a8fafb)
+[Powered by Stella]
+ep   610 | step   358240 | score    280 | len   329 | eps 0.094 | qmax   4.40 | upd   70978 |   818 sps |  0.64 h
+ep   620 | step   362236 | score    730 | len   571 | eps 0.093 | qmax   4.01 | upd   70978 |   688 sps |  0.64 h
+ep   630 | step   367284 | score    390 | len   389 | eps 0.093 | qmax   4.14 | upd   70978 |   595 sps |  0.64 h
+ep   640 | step   371698 | score    570 | len   461 | eps 0.093 | qmax   3.64 | upd   70978 |   703 sps |  0.65 h
+ep   650 | step   376746 | score    100 | len   295 | eps 0.092 | qmax   4.21 | upd   70978 |   745 sps |  0.65 h
+ep   660 | step   382106 | score    470 | len   441 | eps 0.092 | qmax   4.21 | upd   70978 |   707 sps |  0.65 h
+ep   670 | step   387072 | score    390 | len   397 | eps 0.091 | qmax   4.60 | upd   70978 |   699 sps |  0.65 h
+ep   680 | step   392256 | score    530 | len   539 | eps 0.091 | qmax   3.47 | upd   70978 |   691 sps |  0.65 h
+ep   690 | step   397554 | score    490 | len   409 | eps 0.091 | qmax   4.18 | upd   70978 |   819 sps |  0.66 h
+ep   700 | step   401732 | score    640 | len   527 | eps 0.090 | qmax   4.04 | upd   70978 |   704 sps |  0.66 h
+ep   710 | step   407338 | score    340 | len   449 | eps 0.090 | qmax   4.19 | upd   71834 |   109 sps |  0.67 h
+ep   720 | step   412900 | score    580 | len   573 | eps 0.090 | qmax   5.18 | upd   73225 |   115 sps |  0.68 h
+ep   730 | step   419106 | score   1140 | len   617 | eps 0.089 | qmax   4.76 | upd   74776 |   118 sps |  0.70 h
+ep   740 | step   425288 | score   1150 | len   857 | eps 0.089 | qmax   4.11 | upd   76322 |   121 sps |  0.71 h
