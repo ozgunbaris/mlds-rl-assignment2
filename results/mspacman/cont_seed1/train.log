@@ -50,3 +50,17 @@ ep   710 | step   407338 | score    340 | len   449 | eps 0.090 | qmax   4.19 | 
 ep   720 | step   412900 | score    580 | len   573 | eps 0.090 | qmax   5.18 | upd   73225 |   115 sps |  0.68 h
 ep   730 | step   419106 | score   1140 | len   617 | eps 0.089 | qmax   4.76 | upd   74776 |   118 sps |  0.70 h
 ep   740 | step   425288 | score   1150 | len   857 | eps 0.089 | qmax   4.11 | upd   76322 |   121 sps |  0.71 h
+device: cpu
+resumed from episode 700, step 401732, updates 70978; refilling the buffer until step 451732
+A.L.E: Arcade Learning Environment (version 0.12.1+8a8fafb)
+[Powered by Stella]
+ep   710 | step   407772 | score   1380 | len   787 | eps 0.090 | qmax   3.84 | upd   70978 |   674 sps |  0.66 h
+ep   720 | step   412104 | score    550 | len   627 | eps 0.090 | qmax   3.95 | upd   70978 |   667 sps |  0.66 h
+ep   730 | step   416788 | score    100 | len   301 | eps 0.089 | qmax   4.25 | upd   70978 |   653 sps |  0.67 h
+ep   740 | step   420956 | score    460 | len   415 | eps 0.089 | qmax   4.65 | upd   70978 |   806 sps |  0.67 h
+ep   750 | step   425634 | score    210 | len   281 | eps 0.089 | qmax   4.25 | upd   70978 |   769 sps |  0.67 h
+ep   760 | step   430230 | score    290 | len   353 | eps 0.088 | qmax   4.27 | upd   70978 |   715 sps |  0.67 h
+ep   770 | step   435380 | score    230 | len   471 | eps 0.088 | qmax   5.02 | upd   70978 |   837 sps |  0.67 h
+ep   780 | step   440280 | score   1130 | len   837 | eps 0.088 | qmax   2.89 | upd   70978 |   591 sps |  0.68 h
+ep   790 | step   444842 | score   1160 | len   553 | eps 0.087 | qmax   3.85 | upd   70978 |   582 sps |  0.68 h
+ep   800 | step   449470 | score    290 | len   347 | eps 0.087 | qmax   4.09 | upd   70978 |   735 sps |  0.68 h

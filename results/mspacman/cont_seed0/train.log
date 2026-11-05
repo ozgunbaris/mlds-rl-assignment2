@@ -50,3 +50,14 @@ ep  1490 | step   938030 | score   1320 | len   721 | eps 0.051 | qmax   8.82 | 
 ep  1500 | step   945654 | score   1440 | len   731 | eps 0.051 | qmax   7.36 | upd  206413 |   161 sps |  1.34 h
 ep  1510 | step   952344 | score   1420 | len   595 | eps 0.050 | qmax   8.78 | upd  208086 |   165 sps |  1.35 h
 ep  1520 | step   958990 | score    990 | len   699 | eps 0.050 | qmax   7.04 | upd  209747 |   171 sps |  1.36 h
+device: cpu
+resumed from episode 1500, step 945654, updates 206413; refilling the buffer until step 995654
+A.L.E: Arcade Learning Environment (version 0.12.1+8a8fafb)
+[Powered by Stella]
+ep  1510 | step   952846 | score   1030 | len   773 | eps 0.050 | qmax   7.49 | upd  206413 |   711 sps |  1.34 h
+ep  1520 | step   959864 | score    630 | len   659 | eps 0.050 | qmax   9.46 | upd  206413 |   749 sps |  1.34 h
+ep  1530 | step   966816 | score   1390 | len   967 | eps 0.049 | qmax   6.98 | upd  206413 |   806 sps |  1.34 h
+ep  1540 | step   973868 | score    430 | len   509 | eps 0.048 | qmax   7.62 | upd  206413 |   628 sps |  1.35 h
+ep  1550 | step   981810 | score   1100 | len   769 | eps 0.048 | qmax   8.17 | upd  206413 |   574 sps |  1.35 h
+ep  1560 | step   988890 | score   1080 | len   715 | eps 0.047 | qmax   7.34 | upd  206413 |   576 sps |  1.35 h
+ep  1570 | step   995614 | score    810 | len   697 | eps 0.047 | qmax   7.72 | upd  206413 |   766 sps |  1.36 h
