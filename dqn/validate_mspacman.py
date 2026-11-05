@@ -284,16 +284,20 @@ def p6_trace(net, steps=10):
 
 # ----------------------------------------------------------------------------- P7
 def p7_determinism(net, games=5, seed=21):
+    """Greedy games with a different reset seed each time. Without sticky actions the emulator and the
+    greedy policy are both deterministic, so every game must be identical whatever the seed; with sticky
+    actions (probability 0.25, drawn from the seeded generator) the games must differ."""
     out = {}
     for sticky in [0.0, 0.25]:
-        sc = []
+        sc, ln = [], []
         for k in range(games):
             env = gym.make(ENV_ID, repeat_action_probability=sticky)
-            env.reset(seed=seed)  # the same reset seed every time
+            env.reset(seed=seed + k)
             g = play_record(net, env, 0.0, np.random.default_rng(seed + k))
             sc.append(float(g["r"].sum()))
+            ln.append(int(len(g["r"])))
             env.close()
-        out[f"sticky_{sticky}"] = sc
+        out[f"sticky_{sticky}"] = {"scores": sc, "lengths": ln}
     return out
 
 
