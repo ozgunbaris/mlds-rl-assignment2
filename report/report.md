@@ -170,6 +170,8 @@ $\gamma = 0.99$ as prescribed. Adam (learning rate $10^{-4}$ decaying linearly t
 
 ![MsPacman-v5: greedy evaluation games (10 every 100 training episodes) next to the training score.](../results/mspacman/figures/mspacman_eval_periodic.png){ width=78% }
 
+![MsPacman-v5: 100-game moving-average score of the two seeds (seed 1 trained for a shorter time on one thread).](../results/mspacman/figures/mspacman_compare_seeds.png){ width=78% }
+
 ## Edge cases (part b)
 
 - **The given preprocessing function computes in unsigned integers.** The observation is `uint8`, so `img.sum(axis=2)` is `uint64` and `img // 3 - 128` wraps around to huge numbers for every pixel darker than 128 (most of the screen). The final `astype(np.int8)` keeps the lowest 8 bits, which equal the intended signed value, so the function is correct by a coincidence of modular arithmetic. It is used unchanged, and a unit test compares it with a signed computation on a random frame (identical). In a real game its output lies in $[-128, 27]$ (the brightest colour sum is 466), so the network's input $x/128$ lies in $[-1, 0.21]$.

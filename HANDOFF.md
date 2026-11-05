@@ -111,7 +111,20 @@ the three required figures (point them to `figures_cluster/mspacman_cluster_seed
 be unique because `report/build.py` numbers figures by file stem), the edge-case and test numbers that come from
 `validation.md`, and the "Compute" paragraph near the top. Keep every statement tied to a number in a results file.
 
-## 6. Caveats
+## 6. Lessons from the cloud runs (use them when choosing the cluster settings)
+
+- The Mnih 2013 network (`--arch nips`) learned steadily on CPU: the 100-game average score of seed 0 rose from 277
+  (random play: 245) to about 900 by game 950 (0.8 h, 560k agent steps), with the Q-values still rising, i.e. far
+  from converged. On the cluster the Nature network (`--arch nature`, default of `make_job.sh`) with the default
+  (long-run) schedules is the better choice if the run gets at least ~4M steps; otherwise keep `--arch nips`.
+- Early greedy policies get stuck (identical scores in all 10 periodic evaluation games at episodes 100 and 200);
+  sticky actions help a deterministic greedy policy out of loops. This is in the edge cases of the report.
+- The first ~66 agent steps of every game are a frozen intro (no action changes the emulator); test P7 measures it.
+- `dqn/validate_mspacman.py` was dry-run on an intermediate network and works end to end (about 1 minute with
+  `--games 3`, several minutes with the default `--games 20`).
+- Never edit a shell script while a launcher is executing it (bash reads scripts incrementally); copy it first.
+
+## 7. Caveats
 
 - The replay buffer is not checkpointed (3.5 GB). `--resume` reloads the networks, optimizer and counters and
   refills the buffer for 50,000 steps before updating again.

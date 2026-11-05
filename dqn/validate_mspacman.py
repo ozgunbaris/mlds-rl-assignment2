@@ -311,7 +311,7 @@ def p7_frozen_start(net, steps=120):
     aset = env.unwrapped._action_set
     st = FrameStack()
     st.reset(frame(obs))
-    frozen, gaps = [], []
+    frozen, gaps, vmax = [], [], []
     for t in range(steps):
         s0 = ale.cloneState()
         outs = []
@@ -326,14 +326,23 @@ def p7_frozen_start(net, steps=120):
             q = net(torch.from_numpy(st.get())[None])[0].numpy()
         frozen.append(same)
         gaps.append(float(q.max() - q.min()))
+        vmax.append(float(q.max()))
         obs, r, term, trunc, _ = env.step(int(q.argmax()))
         st.push(frame(obs))
     env.close()
-    frozen, gaps = np.array(frozen), np.array(gaps)
+    frozen, gaps, vmax = np.array(frozen), np.array(gaps), np.array(vmax)
     first_live = int(np.argmin(frozen)) if (~frozen).any() else steps
+    # nothing can happen during the frozen intro, so each step only brings the first reward one step closer:
+    # max_a Q should grow by a factor 1/gamma per step, i.e. log(max Q) should rise with slope -log(0.99) = 0.01005
+    k = first_live
+    growth = None
+    if k >= 10 and np.all(vmax[:k] > 0):
+        growth = float(np.polyfit(np.arange(k), np.log(vmax[:k]), 1)[0])
     return {"steps_checked": steps, "frozen_steps": int(frozen.sum()), "first_step_where_actions_matter": first_live,
             "action_gap_frozen_mean": float(gaps[frozen].mean()) if frozen.any() else None,
-            "action_gap_after_mean": float(gaps[~frozen].mean()) if (~frozen).any() else None}
+            "action_gap_after_mean": float(gaps[~frozen].mean()) if (~frozen).any() else None,
+            "log_maxq_growth_per_frozen_step": growth, "predicted_growth": float(-np.log(0.99)),
+            "maxq_first_and_last_frozen_step": [float(vmax[0]), float(vmax[k - 1])] if k > 0 else None}
 
 
 # ----------------------------------------------------------------------------- P8
