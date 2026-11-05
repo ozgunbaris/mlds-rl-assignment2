@@ -67,3 +67,13 @@ ep   800 | step   449470 | score    290 | len   347 | eps 0.087 | qmax   4.09 | 
 ep   810 | step   455188 | score   1090 | len   767 | eps 0.086 | qmax   4.01 | upd   71842 |   108 sps |  0.69 h
 ep   820 | step   460898 | score    480 | len   539 | eps 0.086 | qmax   3.91 | upd   73269 |   111 sps |  0.71 h
 ep   830 | step   467986 | score    260 | len   339 | eps 0.086 | qmax   5.58 | upd   75041 |   107 sps |  0.72 h
+ep   840 | step   474378 | score   1230 | len   793 | eps 0.085 | qmax   4.39 | upd   76639 |    97 sps |  0.74 h
+ep   850 | step   480896 | score    280 | len   313 | eps 0.085 | qmax   5.23 | upd   78269 |   109 sps |  0.76 h
+ep   860 | step   486702 | score    370 | len   399 | eps 0.084 | qmax   5.47 | upd   79720 |   112 sps |  0.77 h
+ep   870 | step   492308 | score    400 | len   395 | eps 0.084 | qmax   5.79 | upd   81122 |   119 sps |  0.79 h
+ep   880 | step   498652 | score    760 | len   583 | eps 0.083 | qmax   5.69 | upd   82708 |   108 sps |  0.81 h
+device: cpu
+resumed from episode 850, step 480896, updates 78269; refilling the buffer until step 530896
+A.L.E: Arcade Learning Environment (version 0.12.1+8a8fafb)
+[Powered by Stella]
+ep   860 | step   487434 | score   1240 | len   661 | eps 0.084 | qmax   4.56 | upd   78269 |   780 sps |  0.76 h

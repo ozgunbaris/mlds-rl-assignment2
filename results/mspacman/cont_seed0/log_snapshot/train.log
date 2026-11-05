@@ -65,3 +65,14 @@ ep  1580 | step  1003314 | score   1030 | len   799 | eps 0.046 | qmax   9.12 | 
 ep  1590 | step  1010042 | score   1180 | len   695 | eps 0.046 | qmax   8.45 | upd  210010 |   159 sps |  1.38 h
 ep  1600 | step  1017098 | score    850 | len   753 | eps 0.045 | qmax   8.06 | upd  211774 |   153 sps |  1.40 h
 ep  1610 | step  1023758 | score    760 | len   661 | eps 0.045 | qmax   7.58 | upd  213439 |   181 sps |  1.41 h
+ep  1620 | step  1030716 | score    840 | len   901 | eps 0.044 | qmax   6.60 | upd  215179 |   156 sps |  1.42 h
+ep  1630 | step  1037314 | score    920 | len   863 | eps 0.044 | qmax   7.66 | upd  216828 |   169 sps |  1.43 h
+ep  1640 | step  1044240 | score    800 | len   763 | eps 0.043 | qmax   8.29 | upd  218560 |   157 sps |  1.44 h
+ep  1650 | step  1051830 | score   1090 | len   725 | eps 0.043 | qmax   6.84 | upd  220457 |   150 sps |  1.46 h
+ep  1660 | step  1058786 | score    820 | len   621 | eps 0.042 | qmax   8.87 | upd  222196 |   158 sps |  1.47 h
+ep  1670 | step  1065072 | score    780 | len   569 | eps 0.042 | qmax   9.35 | upd  223768 |   156 sps |  1.48 h
+device: cpu
+resumed from episode 1650, step 1051830, updates 220457; refilling the buffer until step 1101830
+A.L.E: Arcade Learning Environment (version 0.12.1+8a8fafb)
+[Powered by Stella]
+ep  1660 | step  1058056 | score    500 | len   485 | eps 0.042 | qmax   7.96 | upd  220457 |   835 sps |  1.46 h
