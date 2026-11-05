@@ -131,6 +131,7 @@ be unique because `report/build.py` numbers figures by file stem), the edge-case
 - The replay buffer is not checkpointed (3.5 GB). `--resume` reloads the networks, optimizer and counters and
   refills the buffer for 50,000 steps before updating again.
 - `results/mspacman/*/checkpoint.pt` is git-ignored (optimizer state, 20+ MB); `final_weights.pt` and the
-  snapshots are kept.
+  snapshots are kept. The live logs of the continuation runs (`cont_seed*/train.log`, `episodes.csv`, `heldout_q.csv`,
+  `eval_periodic.csv`) are git-ignored while the runs go; copies are committed in `cont_seed*/log_snapshot/`.
 - The CartPole "trained network" is the one with the best periodic greedy check (`best_weights.pt`); the network
   after the last episode collapses in most seeds. This is documented in the report as an edge case.

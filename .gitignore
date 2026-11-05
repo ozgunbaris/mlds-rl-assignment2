@@ -10,3 +10,8 @@ report/report_build.md
 .DS_Store
 # full training checkpoints (optimizer + target network) are large; final weights and snapshots are kept
 results/mspacman/*/checkpoint.pt
+# live logs of the running MsPacman continuation runs (snapshots are committed in cont_seed*/log_snapshot/)
+results/mspacman/cont_seed*/train.log
+results/mspacman/cont_seed*/episodes.csv
+results/mspacman/cont_seed*/heldout_q.csv
+results/mspacman/cont_seed*/eval_periodic.csv

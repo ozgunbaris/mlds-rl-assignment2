@@ -64,3 +64,6 @@ ep   770 | step   435380 | score    230 | len   471 | eps 0.088 | qmax   5.02 | 
 ep   780 | step   440280 | score   1130 | len   837 | eps 0.088 | qmax   2.89 | upd   70978 |   591 sps |  0.68 h
 ep   790 | step   444842 | score   1160 | len   553 | eps 0.087 | qmax   3.85 | upd   70978 |   582 sps |  0.68 h
 ep   800 | step   449470 | score    290 | len   347 | eps 0.087 | qmax   4.09 | upd   70978 |   735 sps |  0.68 h
+ep   810 | step   455188 | score   1090 | len   767 | eps 0.086 | qmax   4.01 | upd   71842 |   108 sps |  0.69 h
+ep   820 | step   460898 | score    480 | len   539 | eps 0.086 | qmax   3.91 | upd   73269 |   111 sps |  0.71 h
+ep   830 | step   467986 | score    260 | len   339 | eps 0.086 | qmax   5.58 | upd   75041 |   107 sps |  0.72 h

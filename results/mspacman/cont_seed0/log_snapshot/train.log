@@ -61,3 +61,7 @@ ep  1540 | step   973868 | score    430 | len   509 | eps 0.048 | qmax   7.62 | 
 ep  1550 | step   981810 | score   1100 | len   769 | eps 0.048 | qmax   8.17 | upd  206413 |   574 sps |  1.35 h
 ep  1560 | step   988890 | score   1080 | len   715 | eps 0.047 | qmax   7.34 | upd  206413 |   576 sps |  1.35 h
 ep  1570 | step   995614 | score    810 | len   697 | eps 0.047 | qmax   7.72 | upd  206413 |   766 sps |  1.36 h
+ep  1580 | step  1003314 | score   1030 | len   799 | eps 0.046 | qmax   9.12 | upd  208328 |   167 sps |  1.37 h
+ep  1590 | step  1010042 | score   1180 | len   695 | eps 0.046 | qmax   8.45 | upd  210010 |   159 sps |  1.38 h
+ep  1600 | step  1017098 | score    850 | len   753 | eps 0.045 | qmax   8.06 | upd  211774 |   153 sps |  1.40 h
+ep  1610 | step  1023758 | score    760 | len   661 | eps 0.045 | qmax   7.58 | upd  213439 |   181 sps |  1.41 h
