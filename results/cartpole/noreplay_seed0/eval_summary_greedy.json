@@ -1,0 +1,15 @@
+{
+  "episodes": 500,
+  "epsilon": 0.0,
+  "mean": 89.898,
+  "std": 4.80037456871857,
+  "min": 74.0,
+  "max": 98.0,
+  "solved_fraction": 0.0,
+  "ends": {
+    "angle": 98,
+    "position": 402,
+    "time limit": 0
+  },
+  "seed": 1000
+}

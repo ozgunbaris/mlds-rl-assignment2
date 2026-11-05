@@ -10,8 +10,11 @@
 
 | survive chain (T = 50) | mean Q per seed | predicted |
 |---|---|---|
-| bootstrap_on_truncation | 20.016, 20.006, 19.992 | 20.000 |
-| truncation_as_terminal | 19.432, 19.870, 19.660 | 14.493 |
+| bootstrap_on_truncation, Huber | 20.016, 20.006, 19.992 | 20.000 |
+| truncation_as_terminal, Huber | 19.432, 19.870, 19.660 | 19.592 |
+| bootstrap_on_truncation, squared | 20.027, 19.964, 19.971 | 20.000 |
+| truncation_as_terminal, squared | 15.284, 15.845, 15.219 | 14.493 |
+| truncation_as_terminal, squared, no gradient clipping | 14.963, 15.216, 14.810 | 14.493 |
 
 ## C2 / C7 run groups
 

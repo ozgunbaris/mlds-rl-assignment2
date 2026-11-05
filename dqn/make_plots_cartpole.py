@@ -123,12 +123,12 @@ def main():
                 if ev is not None:
                     r = np.load(os.path.join(d, "eval_rewards_greedy.npy"))
                     viz.reward_histogram(r, os.path.join(per_run, f"cartpole_{name}_hist.png"),
-                                         f"CartPole-v1, {name}: 500 greedy roll-outs of the final network",
+                                         f"CartPole-v1, {name}: 500 greedy roll-outs, network after the last episode",
                                          bins=np.arange(0, 525, 25))
                 if evb is not None:
                     r = np.load(os.path.join(d, "eval_rewards_greedy_best.npy"))
                     viz.reward_histogram(r, os.path.join(per_run, f"cartpole_{name}_hist_selected.png"),
-                                         f"CartPole-v1, {name}: 500 greedy roll-outs of the selected network",
+                                         f"CartPole-v1, {name}: 500 greedy roll-outs, kept network",
                                          bins=np.arange(0, 525, 25))
     # seeds and ablations
     curves = {}
@@ -139,6 +139,25 @@ def main():
     if curves:
         viz.compare_curves(curves, os.path.join(args.out, "compare_ablations.png"),
                            "CartPole-v1: moving-average reward, mean and std over seeds")
+    # value scale of every ablation (log axis: without a target network the values diverge)
+    import matplotlib.pyplot as plt
+    viz.setup()
+    fig, ax = plt.subplots(figsize=(9, 4.2))
+    for k, (prefix, label) in enumerate(GROUPS):
+        eps_ = [read_csv(os.path.join(d, "episodes.csv")) for d in runs(args.results, prefix)]
+        if not eps_:
+            continue
+        n = min(len(e["episode"]) for e in eps_)
+        m = np.mean([moving_average(e["qmax_mean"], 100)[:n] for e in eps_], 0)
+        ax.plot(np.arange(1, n + 1), m, color=viz.SERIES[k], lw=2, label=f"{label} ({len(eps_)} seeds)")
+    ax.axhline(20, color=viz.TEXT2, ls="--", lw=1, label="1 / (1 - gamma) = 20")
+    ax.set_yscale("log")
+    ax.set_xlabel("training episode")
+    ax.set_ylabel("max_a Q, 100-episode moving average (log scale)")
+    ax.set_title("CartPole-v1: value of the visited states for every ablation")
+    ax.legend(loc="upper left", fontsize=8)
+    fig.savefig(os.path.join(args.out, "compare_ablations_maxq.png"))
+    plt.close(fig)
     main_runs = runs(args.results, "main")
     if main_runs:
         viz.compare_curves({os.path.basename(d): read_csv(os.path.join(d, "episodes.csv"))["reward"] for d in main_runs},

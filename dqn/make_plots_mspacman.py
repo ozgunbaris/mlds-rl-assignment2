@@ -124,7 +124,7 @@ def main():
     for name, (ep, held, ev) in data.items():
         summ[name] = {"episodes": int(len(ep["episode"])), "steps": int(ep["step"][-1]),
                       "first100_mean": float(np.mean(ep["reward"][:100])), "last100_mean": float(np.mean(ep["reward"][-100:])),
-                      "best_ma100": float(moving_average(ep["reward"], 100).max()),
+                      "best_ma100": float(moving_average(ep["reward"], 100)[99:].max()) if len(ep["reward"]) >= 100 else None,
                       "hours": float(ep["wall_time_s"][-1] / 3600)}
         rp = os.path.join(args.runs[list(data).index(name)], f"eval_summary_{args.eval_tag}.json")
         if os.path.exists(rp):

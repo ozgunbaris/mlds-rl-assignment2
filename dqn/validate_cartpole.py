@@ -263,6 +263,26 @@ def main():
     jpath = os.path.join(args.out, "validation.json")
     res = json.load(open(jpath)) if os.path.exists(jpath) else {}
     todo = set(args.only) if args.only else {"chain", "network", "groups"}
+    if "overest_groups" in todo:
+        # C3 for every kept network of the Double DQN and the DQN-target runs: overestimation per variant
+        out = {}
+        for pfx in ["main", "dqn"]:
+            for d in sorted(glob.glob(os.path.join(args.results, pfx + "_seed*"))):
+                w = os.path.join(d, "best_weights.pt")
+                if os.path.exists(w):
+                    o = overestimation(load_net(w), json.load(open(os.path.join(d, "config.json")))["gamma"], seeds=range(10))
+                    out[os.path.basename(d)] = {k: o[k] for k in ["mean_pred", "mean_true", "mean_bias", "max_abs_bias"]}
+                    out[os.path.basename(d)]["survived_2000"] = int(sum(l == 2000 for l in o["lengths_to_2000"]))
+        res["C3_overestimation_by_variant"] = out
+        print("C3 by variant", json.dumps(out), flush=True)
+    if "chain_noclip" in todo:
+        # the squared-loss variant without gradient-norm clipping: clipping scales down exactly the minibatches
+        # that contain the large errors of the wrong targets, which also down-weights them
+        means = [float(run_dqn("survive", 8, 0.95, steps=30_000, seed=s, truncation_terminal=True, time_limit=50,
+                               loss="mse", grad_clip=0.0).mean()) for s in (0, 1, 2)]
+        res.setdefault("C1_chain", {}).setdefault("survive", {})["truncation_as_terminal, squared, no gradient clipping"] = {
+            "mean_q_per_seed": means, "predicted": float(exact_q(8, 0.95, "survive", 50, True, loss="mse")[0, 0])}
+        print("C1 no clipping", means, flush=True)
     if "chain" in todo:
         res["C1_chain"] = chain_tests(args.out)
         print("C1", json.dumps(res["C1_chain"]["survive"]), flush=True)

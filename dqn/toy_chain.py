@@ -84,7 +84,8 @@ def exact_q(n, gamma, mode, time_limit=50, truncation_terminal=False, loss="mse"
 
 
 def run_dqn(mode="goal", n=8, gamma=0.95, steps=20_000, seed=0, double=True, use_target=True,
-            truncation_terminal=False, time_limit=50, lr=1e-3, target_update=100, batch=64, loss="huber"):
+            truncation_terminal=False, time_limit=50, lr=1e-3, target_update=100, batch=64, loss="huber",
+            grad_clip=10.0):
     """Train with a uniformly random behaviour policy; return the learned Q table (n x 2)."""
     torch.manual_seed(seed)
     env = ChainEnv(n, mode, time_limit, seed)
@@ -104,7 +105,7 @@ def run_dqn(mode="goal", n=8, gamma=0.95, steps=20_000, seed=0, double=True, use
             s, a_b, r_b, d_b, s2, _ = buf.sample(batch)
             dqn_update(online, target, opt, (torch.as_tensor(s), torch.as_tensor(a_b), torch.as_tensor(r_b),
                                              torch.as_tensor(d_b), torch.as_tensor(s2)),
-                       gamma, double=double, loss=loss, grad_clip=10.0)
+                       gamma, double=double, loss=loss, grad_clip=grad_clip)
             updates += 1
             if use_target and updates % target_update == 0:
                 sync_target(online, target)

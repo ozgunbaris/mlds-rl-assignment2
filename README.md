@@ -51,7 +51,8 @@ Validation experiments (`dqn/validate_cartpole.py`, results in `results/cartpole
 ## Part (b): MsPacman-v5
 
 ```bash
-scripts/run_mspacman.sh            # the run in the report: 1.7 h on 3 CPU threads, then 500 greedy games
+scripts/run_mspacman.sh            # seed 0 in the report: 1.7 h on 3 CPU threads, then 500 greedy games
+scripts/run_mspacman_seed1.sh      # seed 1: 0.95 h on 1 CPU thread (started when the CartPole runs had finished)
 python -m dqn.mspacman_dqn --out results/mspacman/main_seed0 --seed 0      # defaults for a long run (5000+ episodes)
 python -m dqn.mspacman_dqn --out results/mspacman/main_seed0 --resume      # continue after an interruption
 python -m dqn.mspacman_dqn --eval results/mspacman/main_seed0/final_weights.pt --eval-episodes 500 --out results/mspacman/main_seed0
