@@ -5,9 +5,10 @@
 # The code is embedded as a base64 tarball in a template block (the cluster has no shared storage).
 #
 # Defaults: 3 seeds of the Mnih et al. (2015) network, 8 CPU threads each, 10 hours, at most 6000 episodes,
-# on mlds-deepdish5 (CPU only: Nomad detects no GPU there). Memory: each run's replay buffer of 500,000
-# 88x80 int8 frames takes 3.5 GB, so request about 5 GB per seed.
-# GPU=1 adds a request for one NVIDIA GPU and DEVICE=cuda; it needs a node whose GPU Nomad can see (untested).
+# on mlds-deepdish5. Memory: each run's replay buffer of 500,000 88x80 int8 frames takes 3.5 GB, so request
+# about 5 GB per seed (more with GPU=1, for the CUDA libraries in host memory).
+# GPU=1 adds a request for one NVIDIA GPU and DEVICE=cuda; all seeds share that one GPU. Observed 2026-11-05:
+# Nomad sees 1 RTX PRO 5000 Blackwell and 2 RTX 5060 Ti on mlds-deepdish5 (driver 615.71.09).
 set -e
 cd "$(dirname "$0")/../.."
 REV=$(git rev-parse --short HEAD 2>/dev/null || echo nogit)
@@ -24,6 +25,7 @@ NODE=${NODE:-mlds-deepdish5}
 PREFIX=${PREFIX:-cluster}
 EXTRA=${EXTRA:-""}
 GPU=${GPU:-0}
+HOLD_HOURS=${HOLD_HOURS:-12}
 if [ "$GPU" = "1" ]; then DEVICE=cuda; fi
 OUTFILE=scripts/nomad/$JOB_NAME.nomad
 TMP=$(mktemp -d)
@@ -95,6 +97,7 @@ job "$JOB_NAME" {
         EPISODES         = "$EPISODES"
         PREFIX           = "$PREFIX"
         EXTRA            = "$EXTRA"
+        HOLD_HOURS       = "$HOLD_HOURS"
       }
 
       template {
@@ -121,4 +124,4 @@ $GPU_BLOCK
 }
 EOF
 rm -rf $TMP
-echo "wrote $OUTFILE (job $JOB_NAME on $NODE, revision $REV, hours $HOURS, seeds '$SEEDS', arch $ARCH, threads $THREADS, device $DEVICE, cores $CORES, memory $MEMORY MB, gpu $GPU)"
+echo "wrote $OUTFILE (job $JOB_NAME on $NODE, revision $REV, hours $HOURS, seeds '$SEEDS', arch $ARCH, threads $THREADS, device $DEVICE, cores $CORES, memory $MEMORY MB, gpu $GPU, hold $HOLD_HOURS h)"

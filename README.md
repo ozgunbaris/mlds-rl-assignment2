@@ -50,25 +50,26 @@ Validation experiments (`dqn/validate_cartpole.py`, results in `results/cartpole
 
 ## Part (b): MsPacman-v5
 
+The reported MsPacman results are three seeds of 6,000 games each, trained on one GPU of the lab node mlds-deepdish5 (`results/mspacman/cluster_seed{0,1,2}`, figures in `results/mspacman/figures_cluster/`, validation in `results/mspacman/validation_cluster_seed*/`). Their final networks average 2,314.3, 2,207.0 and 1,503.0 points over 500 greedy test games.
+
 ```bash
-scripts/run_mspacman.sh            # seed 0: 3 CPU threads (stopped by a machine restart after 1,100 games)
-scripts/run_mspacman_seed1.sh      # seed 1: 1 CPU thread (stopped by the same restart after 300 games)
-scripts/run_mspacman_continue.sh   # continue both from their checkpoints (results/mspacman/cont_seed*)
-python -m dqn.mspacman_dqn --out results/mspacman/main_seed0 --seed 0      # defaults for a long run (5000+ episodes)
-python -m dqn.mspacman_dqn --out results/mspacman/main_seed0 --resume      # continue after an interruption
-python -m dqn.mspacman_dqn --eval results/mspacman/main_seed0/final_weights.pt --eval-episodes 500 --out results/mspacman/main_seed0
-python -m dqn.make_plots_mspacman --runs results/mspacman/main_seed0 --out results/mspacman/figures
-python -m dqn.validate_mspacman --run results/mspacman/main_seed0 --out results/mspacman/validation
+python -m dqn.mspacman_dqn --out results/mspacman/cluster_seed0 --seed 0 --arch nature --threads 1 --max-episodes 6000
+python -m dqn.mspacman_dqn --out results/mspacman/cluster_seed0 --resume      # continue after an interruption
+python -m dqn.mspacman_dqn --eval results/mspacman/cluster_seed0/final_weights.pt --eval-episodes 500 --eval-eps 0 --out results/mspacman/cluster_seed0
+python -m dqn.make_plots_mspacman --runs results/mspacman/cluster_seed0 results/mspacman/cluster_seed1 results/mspacman/cluster_seed2 --out results/mspacman/figures_cluster
+python -m dqn.validate_mspacman --run results/mspacman/cluster_seed0 --out results/mspacman/validation_cluster_seed0
 ```
+
+Earlier runs on a 4-core cloud machine without a GPU used five shortened settings (`results/mspacman/main_seed*`, `cont_seed*`; scripts `scripts/run_mspacman.sh`, `scripts/run_mspacman_seed1.sh`, `scripts/run_mspacman_continue.sh`). The report describes them in one paragraph. `results/mspacman/gpu_run1_partial/` holds the logs of a first GPU run on mlds-deepdish4 whose results were deleted by the cluster before they were copied.
 
 Main options: `--arch {nips,nature}` (Mnih et al. 2013 / 2015 network), `--device {auto,cpu,cuda}`, `--threads`, `--max-episodes`, `--time-limit-hours`, `--buffer-size`, `--lr`, `--lr-final`, `--eps-*`, `--target-update`, `--no-double`, `--loss {huber,mse}`, `--reward-clip`, `--no-life-loss-terminal`. Training writes a checkpoint every 50 episodes and on Ctrl-C; `--resume` continues from it (the replay buffer is refilled for 50,000 steps first).
 
-Validation experiments (`dqn/validate_mspacman.py`, results in `results/mspacman/validation/validation.md`):
+Validation experiments (`dqn/validate_mspacman.py`, results in `results/mspacman/validation_cluster_seed*/validation.md`):
 
 | test | what it does | how it validates |
 |---|---|---|
 | P1 preprocessing | raw frame, preprocessed frame, 4-frame state; counts the pixels removed as Ms. Pac-Man | the given function is used unchanged; its unsigned-integer arithmetic is shown to give the signed result |
-| P2 random policy | 100 games with uniformly random actions | the floor every learning curve must rise above |
+| P2 random policy | 100 games with uniformly random actions | the score every learning curve is compared with |
 | P3 snapshots | 20 greedy games for every saved network | learning shows as rising scores of the saved networks, free of exploration noise |
 | P4 calibration | predicted Q(s_t, a_t) against the realised discounted clipped return, cut at lost lives as in training | the network must predict the quantity it is trained on |
 | P5 events | average max_a Q around lost lives, power pellets and eaten ghosts | the non-standard plot; the value must fall before a death and rise after a power pellet |
@@ -82,8 +83,12 @@ Validation experiments (`dqn/validate_mspacman.py`, results in `results/mspacman
 `scripts/nomad/make_job.sh` writes a Nomad batch job that embeds the code as a base64 tarball, installs the dependencies in a `python:3.12-slim` container, runs the unit tests, trains several seeds in parallel, rolls out 500 games per run and packs the results; `scripts/fetch_cluster_results.sh` copies them back. See `HANDOFF.md` for the exact procedure.
 
 ```bash
-HOURS=10 SEEDS="0 1 2" ARCH=nature THREADS=8 CORES=24 MEMORY=16384 JOB_NAME=mspacman-dqn scripts/nomad/make_job.sh
+GPU=1 HOURS=16 SEEDS="0 1 2" ARCH=nature THREADS=1 CORES=6 MEMORY=20480 EPISODES=6000 PREFIX=cluster \
+    HOLD_HOURS=12 JOB_NAME=mspacman-dqn-gpu scripts/nomad/make_job.sh    # the job of the reported runs
+scripts/fetch_cluster_results.sh <alloc-id> mspacman-dqn-gpu           # copy the packed results back
 ```
+
+Nomad on this cluster deletes a finished job and its files within hours. The job therefore keeps its task alive after the test games until `/alloc/data/FETCHED` exists (or `HOLD_HOURS` pass); release it with `nomad alloc exec <alloc-id> touch /alloc/data/FETCHED` after fetching.
 
 ## Repository layout
 

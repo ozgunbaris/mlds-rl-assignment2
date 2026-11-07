@@ -1,0 +1,20 @@
+A.L.E: Arcade Learning Environment (version 0.12.1+8a8fafb)
+[Powered by Stella]
+P1 {'frames': 449, 'pixels_with_sum_448_in_crop': {'min': 7, 'max': 17, 'mean': 10.703786191536748, 'frames_with_none': 0}, 'pixels_with_sum_448_that_are_not_mspacman_colour_max': 0, 'value_range_preprocessed': [-128, 27]}
+P2 {'games': 100, 'mean': 245.1, 'std': 50.44789391044983, 'min': 140.0, 'max': 410.0, 'length_mean': 494.64}
+  snapshot ep 0: 140.0 +- 0.0
+  snapshot ep 100: 140.0 +- 0.0
+  snapshot ep 250: 110.0 +- 0.0
+  snapshot ep 500: 523.0 +- 52.3
+  snapshot ep 1000: 768.0 +- 62.3
+  snapshot ep 1500: 783.0 +- 54.6
+  snapshot ep 2000: 991.5 +- 59.7
+  snapshot ep 2500: 1192.0 +- 81.5
+  snapshot ep 3000: 963.0 +- 59.9
+  snapshot ep 4000: 1594.5 +- 72.1
+  snapshot ep 5000: 1363.0 +- 70.1
+  snapshot ep 6000: 1591.5 +- 64.7
+P4 {"steps": 16542, "mean_pred": 13.51514720916748, "mean_true": 11.628239048920976, "mean_bias": 1.8869078447638261, "corr": 0.6363562903871808, "bins_pred": [0.5440000295639038, 1.9930000305175781, 2.2839999198913574, 3.8340001106262207, 4.47599983215332, 5.281000137329102, 6.449999809265137, 7.70399
+P5 {'life lost': {'n': 40, 'q_at_-60': 15.268959045410156, 'q_at_-10': 1.6629890203475952, 'q_at_0': 0.7808841466903687, 'q_at_+10': 4.427230358123779}, 'power pellet eaten': {'n': 44, 'q_at_-60': 18.356346130371094, 'q_at_-10': 22.4283504486084, 'q_at_0': 22.621673583984375, 'q_at_+10': 22.4063663482666}, 'ghost eaten': {'n': 8, 'q_at_-60': 14.886566162109375, 'q_at_-10': 13.552864074707031, 'q_at_0': 11.519100189208984, 'q_at_+10': 12.456205368041992}}
+P7 {'sticky_0.0': {'scores': [1370.0, 1370.0, 1370.0, 1370.0, 1370.0], 'lengths': [765, 765, 765, 765, 765]}, 'sticky_0.25': {'scores': [1270.0, 1710.0, 1310.0, 1440.0, 1710.0], 'lengths': [677, 971, 735, 903, 897]}} {'steps_checked': 120, 'frozen_steps': 66, 'first_step_where_actions_matter': 66, 'action_gap_frozen_mean': 0.07275411576935739, 'action_gap_after_mean': 0.6226311083193179, 'log_maxq_growth_per_frozen_step': 0.0004672251977542859, 'predicted_growth': 0.01005033585350145, 'maxq_first_and_last_frozen_step': [2.0773189067840576, 2.319434404373169]}
+wrote results/mspacman/validation_cluster_seed2/validation.md (260 s)

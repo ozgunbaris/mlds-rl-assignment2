@@ -1,0 +1,13 @@
+A.L.E: Arcade Learning Environment (version 0.12.1+8a8fafb)
+[Powered by Stella]
+  eval 50/500: mean so far 2395.8 (77s)
+  eval 100/500: mean so far 2338.4 (149s)
+  eval 150/500: mean so far 2322.9 (225s)
+  eval 200/500: mean so far 2320.6 (298s)
+  eval 250/500: mean so far 2324.2 (369s)
+  eval 300/500: mean so far 2296.7 (441s)
+  eval 350/500: mean so far 2306.4 (516s)
+  eval 400/500: mean so far 2303.5 (588s)
+  eval 450/500: mean so far 2311.7 (659s)
+  eval 500/500: mean so far 2314.3 (732s)
+{"episodes": 500, "epsilon": 0.0, "mean": 2314.3, "std": 381.56429340282875, "min": 920.0, "max": 3750.0, "median": 2380.0, "length_mean": 981.316, "seed": 2026}

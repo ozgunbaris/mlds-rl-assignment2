@@ -64,11 +64,12 @@ def main():
         if os.path.exists(rp):
             r = np.load(rp)
             viz.reward_histogram(r, os.path.join(args.out, f"mspacman_{name}_hist.png"),
-                                 f"MsPacman-v5, {name}: 500 roll-out games of the final network (greedy)",
+                                 f"MsPacman-v5, {name}: final network, {len(r)} greedy games",
                                  bins=30, xlabel="game score")
     if len(data) > 1:
         viz.compare_curves({k: v[0]["reward"] for k, v in data.items()}, os.path.join(args.out, "mspacman_compare_seeds.png"),
-                           "MsPacman-v5: 100-episode moving-average score of the two seeds", ylabel="game score (moving average)")
+                           f"MsPacman-v5: 100-episode moving-average score of the {len(data)} seeds",
+                           ylabel="game score (moving average)")
     # periodic greedy evaluation
     viz.setup()
     fig, ax = plt.subplots(figsize=(9, 4.2))

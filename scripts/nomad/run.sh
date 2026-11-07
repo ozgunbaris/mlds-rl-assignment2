@@ -70,3 +70,15 @@ wait
 echo "EVAL done $(date -u +%H:%M:%S)"
 pack
 echo "END $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+# Keep the allocation running so its files stay readable with nomad alloc fs. On this cluster Nomad removed a
+# finished job, its allocation and its files within hours (job mspacman-dqn-gpu-dd4, 2026-11-07). The task exits
+# when /alloc/data/FETCHED exists (nomad alloc exec <alloc> touch /alloc/data/FETCHED) or after HOLD_HOURS.
+HOLD_MIN=$(( HOLD_HOURS * 60 ))
+echo "HOLD up to $HOLD_HOURS h until /alloc/data/FETCHED exists"
+i=0
+while [ ! -e $BASE/FETCHED ] && [ $i -lt $HOLD_MIN ]; do
+  sleep 60
+  i=$(( i + 1 ))
+done
+echo "RELEASED after $i min $(date -u +%Y-%m-%dT%H:%M:%SZ)"

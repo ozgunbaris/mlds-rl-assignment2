@@ -1,0 +1,59 @@
+{
+  "cluster_seed0": {
+    "episodes": 6000,
+    "steps": 4569170,
+    "first100_mean": 261.0,
+    "last100_mean": 1953.8,
+    "best_ma100": 2142.2,
+    "hours": 2.4768611111111114,
+    "rollout": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 2314.3,
+      "std": 381.56429340282875,
+      "min": 920.0,
+      "max": 3750.0,
+      "median": 2380.0,
+      "length_mean": 981.316,
+      "seed": 2026
+    }
+  },
+  "cluster_seed1": {
+    "episodes": 6000,
+    "steps": 4707150,
+    "first100_mean": 257.1,
+    "last100_mean": 2031.3,
+    "best_ma100": 2170.8,
+    "hours": 2.5582777777777777,
+    "rollout": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 2206.96,
+      "std": 630.4651920605927,
+      "min": 470.0,
+      "max": 5470.0,
+      "median": 2160.0,
+      "length_mean": 1048.6,
+      "seed": 2026
+    }
+  },
+  "cluster_seed2": {
+    "episodes": 6000,
+    "steps": 4341878,
+    "first100_mean": 259.7,
+    "last100_mean": 1688.0,
+    "best_ma100": 1688.0,
+    "hours": 2.3196944444444445,
+    "rollout": {
+      "episodes": 500,
+      "epsilon": 0.0,
+      "mean": 1503.04,
+      "std": 319.8849143051294,
+      "min": 710.0,
+      "max": 4440.0,
+      "median": 1380.0,
+      "length_mean": 818.508,
+      "seed": 2026
+    }
+  }
+}
