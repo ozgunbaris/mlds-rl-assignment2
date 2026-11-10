@@ -127,3 +127,13 @@
  "greedy_action_agreement": 0.66
 }
 ```
+
+## C8 exploration noise
+
+| run | kept network, greedy (200 episodes) | kept network, epsilon 0.1 | ends with epsilon 0.1 | greedy checks at final epsilon: median | range | training reward at final epsilon |
+|---|---|---|---|---|---|---|
+| main_seed0 | 500.0 | 186.6 | {'angle': 175, 'position': 1, 'time limit': 24} | 173 | 90 to 500 | 107 |
+| main_seed1 | 493.7 | 374.1 | {'angle': 72, 'position': 14, 'time limit': 114} | 127 | 99 to 243 | 92 |
+| main_seed2 | 458.8 | 417.6 | {'angle': 16, 'position': 44, 'time limit': 140} | 101 | 88 to 215 | 87 |
+| main_seed3 | 499.5 | 228.1 | {'angle': 163, 'position': 2, 'time limit': 35} | 134 | 96 to 500 | 116 |
+| main_seed4 | 500.0 | 489.4 | {'angle': 2, 'position': 11, 'time limit': 187} | 107 | 93 to 292 | 99 |

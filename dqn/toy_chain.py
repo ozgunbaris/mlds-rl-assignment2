@@ -114,3 +114,47 @@ def run_dqn(mode="goal", n=8, gamma=0.95, steps=20_000, seed=0, double=True, use
     if mode == "goal":
         q[n - 1] = 0.0  # the goal is terminal; its value is never used
     return q
+
+
+def aliased_corridor_fixed_point(n_steps, gamma, exit_reward, loss):
+    """Value that the update converges to when `n_steps` consecutive states share one observation.
+
+    n_steps - 1 transitions have the target gamma * q (reward 0, same observation), and the last one has
+    the target exit_reward (terminal). Squared loss: the mean target, q = R / ((n - 1)(1 - gamma) + 1).
+    Huber loss (delta = 1) with R - q > 1: the exit transition contributes a gradient of size 1, so
+    (n - 1)(1 - gamma) q = 1 and q = 1 / ((n - 1)(1 - gamma)), independent of R."""
+    if loss == "huber":
+        return 1.0 / ((n_steps - 1) * (1.0 - gamma))
+    return exit_reward / ((n_steps - 1) * (1.0 - gamma) + 1.0)
+
+
+def run_aliased_corridor(n_steps=66, gamma=0.99, exit_reward=25.0, loss="huber", updates=40_000, seed=0,
+                         lr=1e-3, target_update=50, batch=64):
+    """A corridor of `n_steps` steps whose states all look the same (one constant observation), with reward
+    0 on every step except the last, which pays `exit_reward` and ends the episode. No action has any effect.
+    This copies the frozen start of a MsPacman game: many steps with (almost) the same frames, then a state
+    of high value. The true values are exit_reward * gamma^k for k = 0 .. n_steps - 1; the network cannot
+    represent them because it sees one observation. Same MLPQNet, VectorReplay and dqn_update as CartPole.
+    Returns the learned value (mean over both actions), averaged over the last 10 % of the updates."""
+    torch.manual_seed(seed)
+    rng = np.random.default_rng(seed + 1)
+    online = MLPQNet(1, 2, (64, 64))
+    target = copy.deepcopy(online)
+    opt = torch.optim.Adam(online.parameters(), lr=lr)
+    buf = VectorReplay(100 * n_steps, 1, seed=seed + 2)
+    o = np.ones(1, dtype=np.float32)
+    for _ in range(100):  # 100 episodes fill the buffer: every transition of the corridor equally often
+        for k in range(n_steps):
+            last = k == n_steps - 1
+            buf.add(o, int(rng.integers(2)), exit_reward if last else 0.0, o, last)
+    tail = []
+    for u in range(1, updates + 1):
+        s, a_b, r_b, d_b, s2, _ = buf.sample(batch)
+        dqn_update(online, target, opt, (torch.as_tensor(s), torch.as_tensor(a_b), torch.as_tensor(r_b),
+                                         torch.as_tensor(d_b), torch.as_tensor(s2)), gamma, double=True, loss=loss)
+        if u % target_update == 0:
+            sync_target(online, target)
+        if u > 0.9 * updates and u % 50 == 0:
+            with torch.no_grad():
+                tail.append(float(online(torch.ones(1, 1)).mean()))
+    return float(np.mean(tail))

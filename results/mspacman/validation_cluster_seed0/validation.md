@@ -1,6 +1,6 @@
 # MsPacman validation results (results/mspacman/cluster_seed0)
 
-Wall time of this invocation: 281 s
+Wall time of this invocation: 242 s
 
 ## P1_preprocessing
 
@@ -339,4 +339,248 @@ Wall time of this invocation: 281 s
 
 ```
 "results/mspacman/cluster_seed0"
+```
+
+## P10_input_coverage
+
+```
+{
+ "states": 4655,
+ "zero_gradient_rows_cols": {
+  "nature": {
+   "rows": [
+    84,
+    85,
+    86,
+    87
+   ],
+   "cols": [
+    76,
+    77,
+    78,
+    79
+   ]
+  },
+  "nips": {
+   "rows": [
+    84,
+    85,
+    86,
+    87
+   ],
+   "cols": [
+    76,
+    77,
+    78,
+    79
+   ]
+  }
+ },
+ "noise_test": {
+  "rows 84-87": {
+   "max_abs_dq": 0.0,
+   "greedy_action_changed_share": 0.0
+  },
+  "cols 76-79": {
+   "max_abs_dq": 0.0,
+   "greedy_action_changed_share": 0.0
+  },
+  "rows 80-83": {
+   "max_abs_dq": 9.740850448608398,
+   "greedy_action_changed_share": 0.37636949516648766
+  },
+  "cols 72-75": {
+   "max_abs_dq": 12.269116401672363,
+   "greedy_action_changed_share": 0.5544575725026852
+  }
+ },
+ "lives_indicator_pixels_in_preprocessed_rows_86_87": {
+  "3": 8,
+  "2": 4,
+  "1": 0
+ },
+ "lives_redraw_test": {
+  "3 lives drawn as 1": {
+   "states": 2727,
+   "pixels_changed_per_frame": 8,
+   "max_abs_dq": 0.0,
+   "greedy_action_changed_share": 0.0
+  },
+  "1 lives drawn as 3": {
+   "states": 934,
+   "pixels_changed_per_frame": 8,
+   "max_abs_dq": 0.0,
+   "greedy_action_changed_share": 0.0
+  },
+  "2 lives drawn as 3": {
+   "states": 994,
+   "pixels_changed_per_frame": 4,
+   "max_abs_dq": 0.0,
+   "greedy_action_changed_share": 0.0
+  },
+  "3 lives drawn as 2": {
+   "states": 2727,
+   "pixels_changed_per_frame": 4,
+   "max_abs_dq": 0.0,
+   "greedy_action_changed_share": 0.0
+  }
+ },
+ "mspacman_share_of_steps_partly_in_raw_cols_152_159": 0.047261009667024706,
+ "mspacman_share_of_steps_entirely_in_raw_cols_152_159": 0.002363050483351235,
+ "mspacman_lowest_raw_row": 168
+}
+```
+
+## P11_frozen_phases
+
+```
+{
+ "games": 5,
+ "epsilon": 0.05,
+ "start": {
+  "n": 5,
+  "steps": {
+   "mean": 66.0,
+   "min": 66.0,
+   "max": 66.0
+  },
+  "distinct_states": {
+   "mean": 19.0,
+   "min": 19.0,
+   "max": 19.0
+  },
+  "maxq_mean": {
+   "mean": 1.9735654610576052,
+   "min": 1.9735654610576052,
+   "max": 1.9735654610576052
+  },
+  "maxq_first": {
+   "mean": 1.7741245031356812,
+   "min": 1.7741245031356812,
+   "max": 1.7741245031356812
+  },
+  "maxq_last": {
+   "mean": 2.1323838233947754,
+   "min": 2.1323838233947754,
+   "max": 2.1323838233947754
+  },
+  "realised_return_first_step": {
+   "mean": 12.622461248433131,
+   "min": 9.609949679611608,
+   "max": 13.672644213365192
+  },
+  "maxq_mean_steps_5_to_14_after": {
+   "mean": 27.957606887817384,
+   "min": 27.957606887817384,
+   "max": 27.957606887817384
+  },
+  "huber_fixed_point": 1.538461538461537,
+  "squared_loss_fixed_point": 16.774564132690426
+ },
+ "restart_after_lost_life": {
+  "n": 10,
+  "steps": {
+   "mean": 29.0,
+   "min": 29.0,
+   "max": 29.0
+  },
+  "distinct_states": {
+   "mean": 19.0,
+   "min": 19.0,
+   "max": 19.0
+  },
+  "maxq_mean": {
+   "mean": 4.516106065388383,
+   "min": 3.5991332284335433,
+   "max": 5.586379560930975
+  },
+  "realised_return_first_step": {
+   "mean": 7.738248899087145,
+   "min": 0.0,
+   "max": 16.05518541151181
+  },
+  "maxq_mean_steps_5_to_14_after": {
+   "mean": 12.915946547985076,
+   "min": 3.89038827419281,
+   "max": 24.75148162841797
+  },
+  "huber_fixed_point": 3.571428571428568,
+  "squared_loss_fixed_point": 9.989677408207205
+ },
+ "death_animation": {
+  "n": 15,
+  "steps": {
+   "mean": 19.533333333333335,
+   "min": 19.0,
+   "max": 20.0
+  },
+  "reward_sum": {
+   "mean": 0.0,
+   "min": 0.0,
+   "max": 0.0
+  },
+  "maxq_mean": {
+   "mean": 4.525737416955986,
+   "min": 0.6954047460305063,
+   "max": 14.273034748278166
+  }
+ },
+ "steps_with_prediction_below_3_and_return_above_10": 331,
+ "of_these_in_the_frozen_start": 326
+}
+```
+
+## P11_corridor_test
+
+```
+{
+ "n=66, huber": {
+  "learned_per_seed": [
+   1.5034816950559615,
+   1.5768098071217538,
+   1.3732082352042199
+  ],
+  "predicted": 1.538461538461537,
+  "true_values_range": [
+   13.00851306625766,
+   25.0
+  ]
+ },
+ "n=66, mse": {
+  "learned_per_seed": [
+   14.626963818073273,
+   15.21329061985016,
+   14.031032049655915
+  ],
+  "predicted": 15.151515151515147,
+  "true_values_range": [
+   13.00851306625766,
+   25.0
+  ]
+ },
+ "n=29, huber": {
+  "learned_per_seed": [
+   3.5728097766637803,
+   3.2742220878601076,
+   3.38811956346035
+  ],
+  "predicted": 3.571428571428568,
+  "true_values_range": [
+   18.867982180090813,
+   25.0
+  ]
+ },
+ "n=29, mse": {
+  "learned_per_seed": [
+   19.39518723487854,
+   19.0174654006958,
+   19.01920986175537
+  ],
+  "predicted": 19.531249999999996,
+  "true_values_range": [
+   18.867982180090813,
+   25.0
+  ]
+ }
+}
 ```

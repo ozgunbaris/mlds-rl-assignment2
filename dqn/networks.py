@@ -32,6 +32,8 @@ class AtariQNet(nn.Module):
     preprocess_observation(); it is scaled to [-1, 1) inside the network.
     conv 8x8/4 (32) -> conv 4x4/2 (64) -> conv 3x3/1 (64) -> fc 512 -> fc n_actions.
     Spatial sizes: 88x80 -> 21x19 -> 9x8 -> 7x6, so the flattened size is 64*7*6 = 2688.
+    The 4x4/2 convolution reads only the first 20 x 18 of the 21 x 19 positions, so input rows 84-87
+    and columns 76-79 reach no output (validation test P10 in dqn/validate_mspacman.py).
     """
 
     def __init__(self, n_actions: int = 9, in_frames: int = 4, height: int = 88, width: int = 80, arch: str = "nature"):

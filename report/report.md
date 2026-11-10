@@ -1,10 +1,14 @@
 ---
 title: "IEMS 469 Reinforcement Learning, Assignment 2: Deep Q-Network"
 author: "Özgün Barış Kır, student number 3676663, GitHub username ozgunbaris"
-date: "November 7, 2026"
+date: "November 9, 2026"
 geometry: margin=0.8in
 fontsize: 11pt
 colorlinks: true
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
+  - \emergencystretch=3em
 ---
 
 # Repository and how to run the code
@@ -23,12 +27,13 @@ python -m dqn.cartpole_dqn --out results/cartpole/main_seed0 --seed 0 \
 scripts/run_cartpole.sh                                         # (a), all 23 runs
 python -m dqn.make_plots_cartpole                               # (a) figures
 python -m dqn.validate_cartpole                                 # (a) validation
+python -m dqn.validate_cartpole --only exploration_noise        # (a) test C8
 GPU=1 HOURS=16 SEEDS="0 1 2" ARCH=nature THREADS=1 CORES=6 MEMORY=20480 \
     EPISODES=6000 PREFIX=cluster HOLD_HOURS=12 JOB_NAME=mspacman-dqn-gpu \
     scripts/nomad/make_job.sh                                   # (b) Nomad job, 3 seeds
 scripts/fetch_cluster_results.sh <alloc-id> mspacman-dqn-gpu    # (b) copy results back
 python -m dqn.mspacman_dqn --out results/mspacman/cluster_seed0 --seed 0 \
-    --arch nature --threads 1 --max-episodes 6000              # (b) one seed, without Nomad
+    --arch nature --threads 1 --max-episodes 6000               # (b) one seed, no Nomad
 python -m dqn.make_plots_mspacman --runs results/mspacman/cluster_seed0 \
     results/mspacman/cluster_seed1 results/mspacman/cluster_seed2 \
     --out results/mspacman/figures_cluster                      # (b) figures
@@ -88,7 +93,7 @@ Mean over the five seeds of the kept networks' roll-out means: 490.2. One run (1
 
 **(i) Maximum Q-values.** The value of the visited states rises from 0 to the bound $1/(1-\gamma) = 20$ in about 600 episodes and stays there (mean of the last 100 episodes 19.72 for seed 0, 19.72 to 20.37 over the five seeds). Every step pays $+1$ and the time limit is bootstrapped, so a policy that never fails has $Q = 20$ exactly, which is where the learned values settle; the largest value of an episode is slightly above it (20.6 to 21.1 over the last 100 episodes), which is the overestimation measured in test C3. The average over the 500 fixed held-out states (taken from a random policy, so they include falling poles) settles lower, at 18.1. The held-out curve rises in steps: each step is a copy of the online network into the target network (every 500 updates), the moment when the regression target moves.
 
-**(ii) Rewards.** The training reward is collected with $\epsilon$-greedy actions, and after step 21,000 one action in ten is random. In states where the margin is small one random push ends the episode (the trace in the tests shows a state where the wrong action is worth 6.3 against 20.7, i.e. failure within about 7 steps), so the 100-episode moving average stays near 100 even when the greedy policy is perfect. The green markers in the same figure are the greedy checks (20 separate evaluation episodes every 25 training episodes): they reach 500 already at episode 125 (seed 0; 125 to 225 for four seeds), when $\epsilon$ is still about 0.9, and fluctuate between about 100 and 500 once $\epsilon$ is at its floor. This instability is analysed in the edge cases.
+**(ii) Rewards.** The training reward is collected with $\epsilon$-greedy actions, and after step 21,000 one action in ten is random. In states where the margin is small one random push ends the episode (the trace in the tests shows a state where the wrong action is worth 6.3 against 20.7, i.e. failure within about 7 steps), so the 100-episode moving average stays near 100 even when the greedy policy is perfect. Test C8 measures this: seed 0's kept network scores 500.0 in 200 greedy episodes and 186.6 with $\epsilon = 0.1$. The green markers in the same figure are the greedy checks (20 separate evaluation episodes every 25 training episodes): they reach 500 already at episode 125 (seed 0; 125 to 225 for four seeds), when $\epsilon$ is still about 0.9, and fluctuate between about 100 and 500 once $\epsilon$ is at its floor. This instability is analysed in the edge cases.
 
 **(iii) Roll-outs.** The kept network of seed 0 scores 500 in all 500 greedy episodes.
 
@@ -102,7 +107,7 @@ Mean over the five seeds of the kept networks' roll-out means: 490.2. One run (1
 
 ## Edge cases (part a)
 
-- **The 500-step time limit is a truncation, not a terminal state.** CartPole-v1 returns `truncated = True` after 500 steps. The state (cart position and velocity, pole angle and angular velocity) carries no clock, so the value of a state cannot depend on how many steps happen to remain. The bootstrap mask is therefore $d = $ `terminated` only, and the target at a truncated step is $1 + \gamma \max Q(s')$, not 1. Treating the limit as terminal gives some visits of a state the target 1 and the others about 20. Test C1 measures the resulting bias on a problem where it can be computed exactly, and the `truncterm` runs measure its effect on CartPole (tests below).
+- **The 500-step time limit is a truncation, not a terminal state.** CartPole-v1 returns `truncated = True` after 500 steps. The state (cart position and velocity, pole angle and angular velocity) carries no clock, so the value of a state cannot depend on how many steps happen to remain. The bootstrap mask is therefore $d$ = `terminated` only, and the target at a truncated step is $1 + \gamma \max Q(s')$, not 1. Treating the limit as terminal gives some visits of a state the target 1 and the others about 20. Test C1 measures the resulting bias on a problem where it can be computed exactly, and the `truncterm` runs measure its effect on CartPole (tests below).
 - **The reward of the last step and the bound on Q.** CartPole pays $+1$ on every step, including the step on which the pole falls, so the target of a terminal transition is exactly 1 and every $Q$ lies in $[1, 1/(1-\gamma)] = [1, 20]$. The learned values respect this on the states the agent visits (19.72 at the end of seed 0); predictions above 20 are overestimation and are measured in test C3.
 - **A discount factor of 0.95 makes the agent short-sighted, and the cart drifts off the track.** A failure $T$ steps ahead lowers the value by $20 \cdot 0.95^T$: by 7.2 at $T = 20$, 0.92 at $T = 60$ and 0.12 at $T = 100$. A slow drift of the cart toward the edge is therefore almost invisible to the value until it can no longer be corrected. The first trial network (600 episodes, $\epsilon$ floor 0.02, unscaled inputs; `results/cartpole/preliminary/cp_try0`) balanced the pole but lost the cart in all 500 roll-outs, after 115 steps on average, and in the five main runs every roll-out failure is a cart-position failure. The cart-position map of the kept network (Figure FIG(fig_val_position_map_main)) shows the cause: with the pole upright, the value falls to about 18 only at the left edge while moving left; the right edge is barely represented, and in states the agent never visits (fast motion near an edge) the network extrapolates up to 23.3, above the bound. The configuration whose kept networks hold the cart on the track for 500 steps combines inputs scaled to order 1, longer training, more exploration (next item) and model selection; the preliminary runs did not isolate the contribution of each.
 - **Instability once the task is learned, and how the trained network is chosen.** Once the agent balances, almost every target is close to 20 and the two actions differ by very little: the median absolute action gap $|Q(s,\text{right}) - Q(s,\text{left})|$ on visited states is 0.044 (test C5). A small change of the weights then flips the greedy action in many states, so the greedy policy keeps changing even when the loss is small. The greedy checks show it (Figure FIG(cartpole_main_seed0_training)): repeatedly perfect between episodes 125 and 425, then between about 100 and 500 once $\epsilon$ reached its floor (episode 558). All five networks after the last episode score 88.6 to 173.4. The preliminary runs (`results/cartpole/preliminary/README.md`) show the same with every variation tried (larger buffer and batch, soft target updates, a wider network, a stopping rule). The remedy used here is model selection on separate data: the network with the best greedy check (20 evaluation episodes on a different environment instance) is kept, and it is judged on 500 new episodes. Both networks are reported.
@@ -123,10 +128,10 @@ The 11 checks in `tests/test_dqn.py` cover the mechanics (the frame-stack replay
 3. **The time limit in CartPole itself.** With $\epsilon = 0.1$ the $\epsilon$-greedy training episodes rarely survive 500 steps: the limit was reached in 4, 0, 0, 1 and 0 of the 1000 training episodes of the five seeds. Until the first truncation the `truncterm` runs (time limit treated as terminal) are the same computation as the main runs; seed 1 is identical to the last digit (kept network 495.4, final 98.0), and seed 0 departs only after episode 836 (kept 500.0 in both; final network 470.6 against 173.4, a divergence of two chaotic training runs rather than an effect of the time limit, since only 4 truncated transitions entered the buffer). On CartPole with this configuration the edge case exists in principle but almost never occurs, and C1 is the test that isolates it.
 4. **C2: the scale of Q follows the discount factor and the reward.** A policy that never fails has $Q = r/(1-\gamma)$ exactly, so the learned value must scale with the discount factor and with the reward (Figure FIG(compare_gamma_maxq)). Over the last 100 of 1000 episodes the visited-state value averages 9.78 and 9.68 with $\gamma = 0.9$ (exact value 10; 2 seeds), 19.72 to 20.37 with $\gamma = 0.95$ (exact 20; 5 seeds), and 39.74 with every reward doubled (exact 40). With $\gamma = 0.99$ it reaches 73.5 and 76.2 and is still rising (exact 100). This is the expected speed: each copy into the target network acts roughly like one Bellman backup, and a sequence of $k$ backups from 0 reaches $100(1 - 0.99^k)$, which is 70.7 and 66.2 after the 122 and 108 copies of these runs, against 20.0 of 20 for $\gamma = 0.95$ after 134 copies. The measured values are of that size and somewhat higher, plausibly because the online network keeps fitting between copies, so a period does a little more than one backup. The kept networks score 500.0 and 500.0 ($\gamma = 0.9$), 500.0 and 496.3 ($\gamma = 0.99$) and 500.0 (doubled reward).
 5. **C3: overestimation against the true return.** The kept network of seed 0 played 20 greedy episodes with the time limit raised to 2000 steps; all 20 lasted the full 2000 steps, four times the training limit, so the true discounted return of every state in the first 500 steps is 20.00 (the tail beyond 2000 steps is below $10^{-30}$). The predicted $Q(s_t, a_t)$ averaged 20.67: Double DQN still overestimates, by 0.67 (3.4 %), and by at most 1.05 in any state.
-6. **C4: the first 10 steps of a greedy episode.** The table follows seed 0's kept network. While the pole is nearly upright the two actions are almost equally good (20.43 against 20.41 at $t = 0$), and the Bellman error $y - Q(s, a)$ is below 0.04 in absolute value in the first five steps (at most 0.22 in the ten). At $t = 6$ the pole leans right ($\theta = 0.103$) and rotates right ($\dot\theta = 1.23$): pushing left is worth 6.32, which is the value of failing in about 7 steps ($\sum_{k<7} 0.95^k = 6.0$), and pushing right 20.74, so the agent pushes right and keeps pushing right until the rotation slows (Q(left) recovers to 8.70, 12.64, 17.64).
+6. **C4: the first 10 steps of a greedy episode.** The table follows seed 0's kept network. While the pole is nearly upright the two actions are almost equally good (20.43 against 20.41 at $t = 0$), and the Bellman error $y - Q(s, a)$, with $y = r + \gamma \max_{a'} Q(s', a')$, is below 0.04 in absolute value in the first five steps (at most 0.22 in the ten). At $t = 6$ the pole leans right ($\theta = 0.103$) and rotates right ($\dot\theta = 1.23$): pushing left is worth 6.32, which is the value of failing in about 7 steps ($\sum_{k<7} 0.95^k = 6.0$), and pushing right 20.74, so the agent pushes right and keeps pushing right until the rotation slows (Q(left) recovers to 8.70, 12.64, 17.64).
 
-| t | x | x_dot | theta | theta_dot | Q(left) | Q(right) | action | r | y = r + g max Q(s') | y - Q(s,a) |
-|---|---|---|---|---|---|---|---|---|---|---|
+| t | $x$ | $\dot x$ | $\theta$ | $\dot\theta$ | Q(left) | Q(right) | action | r | target $y$ | $y - Q(s,a)$ |
+|--|----|----|----|----|-----|-----|----|--|-----|------|
 | 0 | +0.013 | +0.040 | +0.028 | -0.027 | 20.434 | 20.406 | left | 1 | 20.432 | -0.0022 |
 | 1 | +0.013 | -0.156 | +0.027 | +0.274 | 20.455 | 20.453 | left | 1 | 20.441 | -0.0135 |
 | 2 | +0.010 | -0.351 | +0.032 | +0.575 | 20.465 | 20.420 | left | 1 | 20.427 | -0.0380 |
@@ -147,6 +152,10 @@ The 11 checks in `tests/test_dqn.py` cover the mechanics (the frame-stack replay
    - **Time limit treated as terminal**: test 3.
 9. **Control runs.** Two runs check that the update moves the policy in the direction the reward asks for. With **learning rate 0** nothing is learned: the value stays at its initial level ($\max_a Q$ of the first state 0.028 at the start, 0.004 after 300 episodes), and the greedy policy is that of the untrained network (129.5 steps on average over 500 roll-outs). With the **reward negated** ($-1$ per step) the best the agent can do is to end each episode as fast as possible. It learns exactly that: the final network ends all 500 roll-outs after 8.8 steps on average, every one by letting the pole fall (no run had an episode shorter than 8 steps), and the value of the first state goes to $-7.73$, close to $-(1 - 0.95^{T})/(1 - 0.95) = -7.3$ for $T = 8.8$. (The kept network of this run, 129.5, is meaningless: the selection maximises the true CartPole reward, which this run minimises.)
 
+10. **C8: why the training reward stays near 100.** Two causes are measured for the five main runs (`--only exploration_noise`). The first is the random actions. Each kept network played 200 episodes greedily and 200 with $\epsilon = 0.1$. The greedy means are 500.0, 493.7, 458.8, 499.5 and 500.0. With $\epsilon = 0.1$ they are 186.6, 374.1, 417.6, 228.1 and 489.4. For seed 0, 175 of the 200 episodes with $\epsilon = 0.1$ end with a fallen pole, and none of the greedy ones does.
+
+    The second cause is the greedy policy during training. The greedy checks made at $\epsilon = 0.1$ have medians of 173, 127, 101, 134 and 107 over the five seeds. Only 2 of these 83 checks reached 500. The training reward in the same phase averages 87 to 116.
+
 ![C1: learned (markers) and exact (lines) action values on the goal chain, Double DQN, seed 0.](../results/cartpole/validation/fig_val_chain.png){ width=60% }
 
 ![C2: value of the visited states (100-episode moving average, log scale) for discount factors 0.9, 0.95 and 0.99; dashed lines at $1/(1-\gamma)$.](../results/cartpole/figures/compare_gamma_maxq.png){ width=78% }
@@ -161,7 +170,7 @@ The 11 checks in `tests/test_dqn.py` cover the mechanics (the frame-stack replay
 - Measure the action gap $Q(s, a_1) - Q(s, a_2)$ along training and test directly whether the collapses start when the gap falls below the noise of the updates, as argued above. Then test the remedies that act on it: prioritised replay of rare failure transitions, a replay buffer that keeps a fixed share of old episodes, a larger final $\epsilon$, a smaller final learning rate, and the advantage-learning operator that widens the gap.
 - Compare the stopping or selection rule with the alternatives (fixed budget, stopping when the moving average reaches 475, selection on 100 instead of 20 evaluation episodes) by their false-positive rate on 500 fresh episodes.
 - Test the learned policy beyond its training distribution: random initial states far from upright, pushes during the episode, changed pole length and mass, and the time limit raised to 5000 steps.
-- Check $\gamma = 0.95$ against $\gamma = 0.99$ at equal compute: the longer horizon should remove the cart-position failures described in the edge cases.
+- Train $\gamma = 0.99$ until its values converge (they reached 73.5 and 76.2 of 100 here) and test whether the longer horizon removes the cart-position failures. After 1000 episodes it did not: both final networks with $\gamma = 0.99$ lost the cart in all 500 roll-outs.
 
 # Part (b): MsPacman-v5
 
@@ -215,7 +224,7 @@ The average over 1,000 fixed held-out states, collected with a random policy bef
 
 **(iii) Test games (Figure FIG(mspacman_cluster_seed0_hist)).** All 1,500 test games of the three final networks score above the best of 100 random games (410). Seed 0 leads seed 1 by 107 points, about 3.3 standard errors of the difference. Seed 2's games cluster tightly: 300 of its 500 games score 1,250 to 1,450, and 86 score exactly 1,380.
 
-The same three figures for seeds 1 and 2 are in `results/mspacman/figures_cluster/`. `mspacman_diagnostics.png` there shows the loss, the Bellman error, the game length and the schedules.
+The same three figures for seeds 1 and 2 are in `results/mspacman/figures_cluster/`. The file `mspacman_diagnostics.png` in that folder shows the loss, the Bellman error, the game length and the schedules.
 
 **Two runs of the same seeds.** The same job first ran on mlds-deepdish4, which shared its RTX A6000 GPU with another process and used 2 threads per seed. Nomad deleted that finished job and its files before the results were copied. Only its logs up to games 5,105 to 5,168 survive (`results/mspacman/gpu_run1_partial`).
 
@@ -240,7 +249,11 @@ At game 5,000 the 100-game averages were 1,912, 1,741 and 1,754 on deepdish4, ag
 - **The given preprocessing function computes in unsigned integers.** The observation is `uint8`, so `img.sum(axis=2)` is `uint64`, and `img // 3 - 128` wraps around for every pixel darker than 128. The final `astype(np.int8)` keeps the lowest 8 bits, which equal the intended signed value. The function is used unchanged, and a unit test finds it identical to a signed computation on a random frame. In a real game its output lies in $[-128, 27]$, so the network input $x/128$ lies in $[-1, 0.21]$.
 - **The contrast trick must hit Ms. Pac-Man and nothing else.** Pixels whose colour channels sum to 448 are set to the darkest value. In each of 449 frames of a random game, 7 to 17 pixels of the cropped frame had this sum (test P1, Figure FIG(fig_val_preprocess)). No pixel of any other colour had it, so only Ms. Pac-Man is darkened and she is always visible in the input.
 - **One frame shows no motion, and a state must not mix two games.** The replay buffer stores every frame once (500,000 frames, 3.5 GB) and rebuilds the 4-frame stacks at sampling time. A frame from the previous game is replaced by the first frame of the current one, as in the acting loop. Once the buffer is full, the 4 oldest slots are never sampled, because their stacks would reach into the newest frames. A unit test replays 60 random-length episodes through buffers of 37, 50 and 1,000 slots and checks every transition the buffer can return.
-- **Lives.** A lost life ends the bootstrap: the target is the clipped reward alone. The game, the frame stack and the reported score continue. The crop removes the bottom of the screen, where the remaining lives are drawn. The network therefore cannot see how many lives are left (checked at the three life losses of a game).
+- **Lives.** A lost life ends the bootstrap: the target is the clipped reward alone. The game, the frame stack and the reported score continue. The target therefore does not depend on the number of lives left. The crop keeps the top two pixel rows of the lives indicator: 8, 4 and 0 pixels of the preprocessed frame for 3, 2 and 1 lives. The network does not read these rows (next item), and redrawing the indicator changed no Q-value (test P10).
+- **The network does not read the last 4 rows and 4 columns of the frame.** The first convolution (8x8, stride 4) gives 21 x 19 positions, and the second (4x4, stride 2) reads only the first 20 x 18 of them. Preprocessed rows 84 to 87 and columns 76 to 79 therefore reach no output. The rows hold the lowest pixel row of the bottom corridor, the bottom wall and the lives indicator. The columns hold the outer half of the right-hand corridor, the right wall and the tunnel exits.
+
+  Test P10 confirms this on the trained networks and counts how often it matters. Ms. Pac-Man never had a pixel in the unread rows. She was partly inside the unread columns in 1.4 % to 4.7 % of the steps and entirely inside them in 0.07 % to 0.24 %.
+- **Frozen phases.** No action has an effect during the game start (66 steps), the death animation (19 or 20 steps) and the restart after a lost life (29 steps). These transitions are stored and trained on like all others. The lives counter drops at the end of the death animation, so the terminal flag comes 19 or 20 steps after the collision. Every reward in between was 0, so the delay changes no target. The network underestimates the start and the restart, and test P11 predicts the size of this error.
 - **Sticky actions.** The stored action is the one the agent chose, because the update concerns the value of that choice. The repetition by the emulator is part of the transition noise. Test P7 switches it off to make the game deterministic.
 - **Reward scale.** A pellet is worth 10 points, a power pellet 50, a ghost 200 to 1,600 and a fruit 100 to 5,000. The target clips rewards to $[-1, 1]$, so $Q$ is at most $1/(1-\gamma) = 100$ and the maximum-Q plot is in these units. As a result a ghost is worth as much as a pellet; test P9 measures what the agent eats.
 - **The time limit.** A game is truncated after 108,000 frames (27,000 agent steps), and the truncation is bootstrapped as in CartPole. No game reached it: the longest of the 18,000 training games had 2,095 agent steps.
@@ -250,7 +263,12 @@ At game 5,000 the 100-game averages were 1,912, 1,741 and 1,754 on deepdish4, ag
 
 ## Tests that validate correctness (part b)
 
-`python -m dqn.validate_mspacman --run results/mspacman/cluster_seed0 --out results/mspacman/validation_cluster_seed0` runs P1 to P9 on a trained network. The results of the three seeds are in `results/mspacman/validation_cluster_seed*/validation.md`. The numbers below are for seed 0 unless a seed is named.
+The command below runs P1 to P11 on a trained network. The results of the three seeds are in the folders `results/mspacman/validation_cluster_seed*`, each in a file `validation.md`. The numbers below are for seed 0 unless a seed is named.
+
+```bash
+python -m dqn.validate_mspacman --run results/mspacman/cluster_seed0 \
+    --out results/mspacman/validation_cluster_seed0
+```
 
 1. **P1: preprocessing (Figure FIG(fig_val_preprocess)).** The figure shows the raw frame, the preprocessed frame and the four frames of a state. The colour sum 448 marks Ms. Pac-Man and nothing else: 7 to 17 pixels in each of 449 frames, and no pixel of another colour. The output range in a game is $[-128, 27]$. A unit test confirms the unsigned arithmetic.
 2. **P2: random policy.** 100 games with uniformly random actions score 245.1 on average (standard deviation 50.4, minimum 140, maximum 410). They last 495 agent steps on average. The learning curves and test scores above are compared with these numbers.
@@ -259,7 +277,7 @@ At game 5,000 the 100-game averages were 1,912, 1,741 and 1,754 on deepdish4, ag
    Seed 0's networks of games 0, 100 and 250 score 210, 60 and 60 in all 20 games. Seed 2's networks of the same games score 140, 140 and 110 in all 20 games. This is the stuck greedy policy described in the edge cases.
 4. **P4: does the network predict what it is trained to predict? (Figure FIG(fig_val_calibration))** The network is trained to predict the discounted sum of clipped rewards up to the next lost life. Along 20 greedy games (19,484 steps), the predicted $Q(s_t, a_t)$ averages 12.46 and the realised return of the same policy 12.25. Prediction and outcome have correlation 0.75. For seeds 1 and 2 the average overestimation is 2.44 and 1.89, with correlations 0.69 and 0.64.
 
-   In 20 bins of the prediction, every bin from 5.7 upwards has a mean realised return 0.4 to 3.3 below its prediction. The bin at prediction 1.98 has a mean realised return of 17.27. In the figure these states form a vertical band at prediction 2, with realised returns of about 12 to 28. They match the frozen game starts of P7 (not checked state by state).
+   In 20 bins of the prediction, every bin from 5.7 upwards has a mean realised return 0.4 to 3.3 below its prediction. The bin at prediction 1.98 has a mean realised return of 17.27. In the figure these states form a vertical band at prediction 2, with realised returns of about 12 to 28. They are the frozen game starts: test P11 counts them and explains the error.
 5. **P5: value around game events, the non-standard plot (Figure FIG(fig_val_events)).** For every event in 20 greedy games, the trace of $\max_a Q$ is aligned on the event and averaged. Around a lost life (n = 40) it averages 10.30 at 60 steps before, 3.96 at 10 steps before and 2.62 at the event. Most of the fall happens between 20 and 16 steps before the event. After the event the value stays at 4.43 during the frozen restart of the next life.
 
    Around a power pellet (n = 77) the value rises from 17.56 sixty steps before to 23.38 ten steps before. The rise comes in two jumps, about 45 and 41 steps before the pellet (cause not examined). Seed 2 shows the same rise (18.36 to 22.43), and seed 1 does not (16.35 to 16.42). The cloud network after 1,100 games showed no rise either (7.92 to 7.81).
@@ -284,13 +302,28 @@ At game 5,000 the 100-game averages were 1,912, 1,741 and 1,754 on deepdish4, ag
 
    At each of the first 120 steps of a game, the emulator was cloned and all 9 actions were applied. In the first 66 steps every action led to exactly the same emulator state; this is the intro of the game. There the action gap $\max_a Q - \min_a Q$ averages 0.076, against 0.682 afterwards.
 
-   During the intro only the first reward comes closer, so $\log \max_a Q$ should grow by $-\log 0.99 = 0.0101$ per step. The fitted slope over the 66 frozen steps is 0.0008 ($\max_a Q$ from 1.77 to 2.13), and seeds 1 and 2 give 0.0005. The network therefore does not track the value in the intro, and P4 shows that it underestimates these states. No action matters there, so this error cannot change a decision; its cause was not tested.
+   During the intro only the first reward comes closer, so $\log \max_a Q$ should grow by $-\log 0.99 = 0.0101$ per step. The fitted slope over the 66 frozen steps is 0.0008 ($\max_a Q$ from 1.77 to 2.13), and seeds 1 and 2 give 0.0005. The network therefore does not track the value in the intro, and P4 shows that it underestimates these states. Test P11 gives the cause.
 8. **P8: where Ms. Pac-Man goes, a second non-standard plot (Figure FIG(fig_val_positions)).** Ms. Pac-Man's position was read from her colour in the raw frames of 10 greedy games per network. The network of game 250 visited 0.8 % of the 4 x 4-pixel cells of the screen (4,650 positions). It moved right along one corridor and stayed at its end in every game. The final network visited 24.6 % of the cells (10,142 positions), covering most corridors of the maze.
 
    Seeds 1 and 2 visited 3.2 % and 3.0 % of the cells at game 250. Their final networks visited 24.7 % and 23.1 %.
 9. **P9: what the agent eats.** Over 20 greedy games the final network scores 2,242 per game. Rewards of 100 points or more (ghosts and fruit) make up 29.9 % of it. It eats 3.85 power pellets per game (the first maze has 4) and 2.2 ghosts. The random policy scores 272.5 per game, 3.7 % of it from such rewards, with 0.10 power pellets and 0.05 ghosts.
 
    Seed 2 eats 2.2 power pellets and 0.4 ghosts per game. Its pellets bring 1,259 points per game, against 1,380 for seed 0. Ghosts and fruit bring it 106 points per game, against 670 for seed 0. They therefore account for 564 of the 768-point gap between the two seeds (1,474 against 2,242 per game).
+
+10. **P10: what the network can see.** The gradient of the output with respect to the input is exactly zero for preprocessed rows 84 to 87 and columns 76 to 79, in both network types. Five greedy games per seed gave 4,359 to 5,553 states. Noise written into these rows or columns changed no Q-value in any state (largest change 0.0000). The same noise in rows 80 to 83 changed a Q-value by up to 9.7 to 21.5 and the greedy action in 38 % to 59 % of the states. In columns 72 to 75 it changed the greedy action in 48 % to 55 %.
+
+    The lives indicator occupies 8, 4 and 0 pixels of rows 86 and 87 for 3, 2 and 1 lives. Redrawing it as another number of lives changed no Q-value in any state.
+11. **P11: the value in frozen phases, with predicted numbers.** Five games per seed ran with sticky actions off and 5 % random actions. At every step the emulator was cloned and all 9 actions were applied. The game start had 66 steps without an effective action in every game, and the restart after a lost life had 29 (30 cases). Each of the two phases shows only 19 distinct states.
+
+    The network must therefore give nearly one value $q$ to $N$ steps that look the same. $N - 1$ of their targets are $\gamma q$, and one target is the much larger value of the first playable state. The Huber loss gives that one target a gradient of size 1, so the fixed point solves $(N - 1)(1 - \gamma)\,q = 1$. This is the calculation of test C1, applied to a rare target that is too high.
+
+    The prediction is $q = 1.54$ for $N = 66$ and $q = 3.57$ for $N = 29$. The three networks predict 1.97, 2.09 and 2.18 at the start and 4.52, 4.69 and 4.45 after a lost life. The measured values lie 25 % to 42 % above the prediction, and their ratio (2.0 to 2.3) is close to the predicted 2.32. A squared loss would give the mean target, 16.7 to 18.0 at the start. The realised return from the first step of a game averaged 11.9 to 12.9.
+
+    A corridor of $N$ identical observations that ends with a reward of 25 checks the calculation with the same update code (`run_aliased_corridor` in `dqn/toy_chain.py`, 3 seeds). With the Huber loss it learned 1.50, 1.58 and 1.37 for $N = 66$ and 3.57, 3.27 and 3.39 for $N = 29$. With a squared loss it learned 14.63, 15.21 and 14.03 for $N = 66$ (predicted 15.15) and 19.40, 19.02 and 19.02 for $N = 29$ (predicted 19.53). The true values lie between 13.0 and 25.
+
+    This explains the vertical band of test P4. In the games of P11, 326 of the 331 steps with a prediction below 3 and a realised return above 10 lie in the frozen start. No action has an effect in these phases. No other state bootstraps from them either: the start has no predecessor, and the restart follows a terminal transition. The error therefore cannot change a decision.
+
+    During the death animation the reward was 0 in all 45 cases, so the true value is 0. The networks predict 4.53, 3.90 and 1.76 there on average. The cause of this overestimate was not identified.
 
 ![P1: raw frame, preprocessed frame and the four preprocessed frames that form one state.](../results/mspacman/validation_cluster_seed0/fig_val_preprocess.png){ width=100% }
 
@@ -308,5 +341,7 @@ At game 5,000 the 100-game averages were 1,912, 1,741 and 1,754 on deepdish4, ag
 - Train longer: all three 100-game averages still rose over the last 1,000 games. The DQN results of Mnih et al. (2015) use 200 million frames, about 11 times the 17.4 to 18.8 million used here.
 - Ablate each design choice on MsPacman at equal compute. The comparisons are clipped against log-scaled or Pop-Art normalised rewards, life loss as terminal or not, Double against plain DQN, and the two networks. Clipping makes a ghost worth as much as a pellet, and seed 2 eats 0.4 ghosts per game.
 - Add the standard improvements one at a time (prioritised replay, dueling network, n-step returns, noisy networks) and measure their effect on the same seeds.
-- Find why the network underestimates the frozen game start (predictions near 2 against realised returns of 12 to 28). Compare $Q$ with Monte Carlo returns from many roll-outs of cloned emulator states. Each state's error is then measured without the noise of a single game.
+- Test the explanation of P11 in the game itself. A run with a squared loss should predict about 16.7 at the game start, against 1.97 now. A run that does not store the frozen steps should show no such error.
+- Pad the frame to 92 x 84 pixels so that the convolutions read every row and column. Measure the score in the right-hand corridor and the tunnels before and after.
+- Compare $Q$ with Monte Carlo returns from many roll-outs of cloned emulator states. Each state's error is then measured without the noise of a single game. Start with the death animation, where the true value is 0.
 - Probe what the network has learned with saliency maps and with controlled states (a ghost next to Ms. Pac-Man, a power pellet just eaten). Measure the score under other sticky-action probabilities, frame skips and the other mazes of the game.

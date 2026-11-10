@@ -47,6 +47,7 @@ Validation experiments (`dqn/validate_cartpole.py`, results in `results/cartpole
 | C5 mirror symmetry | Q(s, left) against Q(-s, right) on visited states | the dynamics are symmetric, so a correct Q-function must be too |
 | C6 value and policy maps | max_a Q and the greedy action over (theta, theta_dot) during training, and over (x, x_dot) | the non-standard plot; shows how the policy forms and where the value drops |
 | C7 ablations | no target network, no replay, no Double DQN, time limit as terminal | each required component is removed and the effect is measured over seeds |
+| C8 exploration noise (`--only exploration_noise`) | kept networks rolled out greedily and with epsilon 0.1; greedy checks made at the final epsilon | separates the two causes of the low training reward: random actions and a changing greedy policy |
 
 ## Part (b): MsPacman-v5
 
@@ -77,6 +78,8 @@ Validation experiments (`dqn/validate_mspacman.py`, results in `results/mspacman
 | P7 determinism and frozen start | sticky actions off: the same game every time; the first steps where no action changes the emulator | with no stochasticity the outcome must repeat; where actions do not matter the action gap should be small |
 | P8 positions | heat map of Ms. Pac-Man's position early and late in training | a second non-standard plot: the trained agent covers the maze |
 | P9 score composition | pellets, power pellets, ghosts and fruit per game | effect of reward clipping |
+| P10 input coverage | finds the input rows and columns with zero gradient, overwrites them with noise, redraws the lives indicator | the convolution sizes drop preprocessed rows 84-87 and columns 76-79, so Q must not change; the lives indicator (rows 86-87) is therefore not read |
+| P11 frozen phases | measures the game start (66 steps), death animation and restart (29 steps) with the emulator-clone test; trains a corridor of identical observations (`run_aliased_corridor` in `dqn/toy_chain.py`) | the Huber fixed point for N steps that look the same, 1 / ((N - 1)(1 - gamma)), predicts the value the network gives these phases (1.54 and 3.57) |
 
 ### Running on the lab cluster (Nomad)
 

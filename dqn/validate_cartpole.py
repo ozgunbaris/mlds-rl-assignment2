@@ -13,6 +13,8 @@ C4  first 10 steps of a greedy episode: state, Q-values, action, reward and Bell
 C5  mirror symmetry of the learned Q (the dynamics are symmetric under s -> -s, left <-> right).
 C6  value and policy maps over (theta, theta_dot) during training and over (x, x_dot) at the end.
 C7  component ablations and the truncation edge case, summarised from the runs in --results.
+C8  why the training reward stays low (run with --only exploration_noise): the kept networks rolled out
+    greedily and with epsilon = 0.1, and the greedy checks made while epsilon was at its final value.
 """
 import argparse
 import glob
@@ -23,7 +25,7 @@ import gymnasium as gym
 import numpy as np
 import torch
 
-from .cartpole_dqn import ENV_ID, failure_reason, load_net
+from .cartpole_dqn import ENV_ID, evaluate, failure_reason, load_net
 from .common import read_csv
 from .toy_chain import exact_q, run_dqn
 
@@ -251,6 +253,31 @@ def group_summary(results, prefix):
     return rows
 
 
+# ----------------------------------------------------------------------------- C8 exploration noise
+def exploration_noise(results, prefix="main", episodes=200):
+    """Two possible reasons for a low epsilon-greedy training reward: the random actions themselves, and a
+    greedy policy that is poor at that moment. (1) Each kept network plays `episodes` episodes greedily and
+    with epsilon = 0.1 (same seeds). (2) The greedy checks logged while epsilon was at its final value."""
+    out = {}
+    for d in sorted(glob.glob(os.path.join(results, prefix + "_seed*"))):
+        net = load_net(os.path.join(d, "best_weights.pt"))
+        seed = int(d[-1])
+        row = {}
+        for eps in (0.0, 0.1):
+            _, sm = evaluate(net, episodes, seed=7000 + seed, eps=eps)
+            row[f"kept_network_eps_{eps}"] = {"mean": sm["mean"], "share_at_500": sm["solved_fraction"], "ends": sm["ends"]}
+        ep = read_csv(os.path.join(d, "episodes.csv"))
+        cfg = json.load(open(os.path.join(d, "config.json")))
+        at_final = ep["epsilon"] <= cfg["eps_final"] + 1e-4
+        checks = ep["eval_greedy_mean"][at_final & ~np.isnan(ep["eval_greedy_mean"])]
+        row["greedy_checks_at_final_epsilon"] = {"n": int(len(checks)), "median": float(np.median(checks)),
+                                                 "min": float(checks.min()), "max": float(checks.max()),
+                                                 "number_at_500": int((checks >= 500).sum())}
+        row["training_reward_mean_at_final_epsilon"] = float(ep["reward"][at_final].mean())
+        out[os.path.basename(d)] = row
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results/cartpole")
@@ -275,6 +302,9 @@ def main():
                     out[os.path.basename(d)]["survived_2000"] = int(sum(l == 2000 for l in o["lengths_to_2000"]))
         res["C3_overestimation_by_variant"] = out
         print("C3 by variant", json.dumps(out), flush=True)
+    if "exploration_noise" in todo:
+        res["C8_exploration_noise"] = exploration_noise(args.results, args.main_prefix)
+        print("C8", json.dumps(res["C8_exploration_noise"]), flush=True)
     if "chain_noclip" in todo:
         # the squared-loss variant without gradient-norm clipping: clipping scales down exactly the minibatches
         # that contain the large errors of the wrong targets, which also down-weights them
@@ -336,6 +366,14 @@ def main():
                   md_table(["t", "x", "x_dot", "theta", "theta_dot", "Q(left)", "Q(right)", "action", "r",
                             "y = r + g max Q(s')", "y - Q(s,a)"], res["C4_trace"]), "",
                   "## C5 mirror", "", "```", json.dumps(res["C5_mirror"], indent=1), "```", ""]
+    if "C8_exploration_noise" in res:
+        rows = [[k, f"{v['kept_network_eps_0.0']['mean']:.1f}", f"{v['kept_network_eps_0.1']['mean']:.1f}",
+                 v["kept_network_eps_0.1"]["ends"], f"{v['greedy_checks_at_final_epsilon']['median']:.0f}",
+                 f"{v['greedy_checks_at_final_epsilon']['min']:.0f} to {v['greedy_checks_at_final_epsilon']['max']:.0f}",
+                 f"{v['training_reward_mean_at_final_epsilon']:.0f}"] for k, v in res["C8_exploration_noise"].items()]
+        lines += ["## C8 exploration noise", "",
+                  md_table(["run", "kept network, greedy (200 episodes)", "kept network, epsilon 0.1", "ends with epsilon 0.1",
+                            "greedy checks at final epsilon: median", "range", "training reward at final epsilon"], rows), ""]
     open(os.path.join(args.out, "validation.md"), "w").write("\n".join(lines))
     print("wrote", os.path.join(args.out, "validation.md"))
 

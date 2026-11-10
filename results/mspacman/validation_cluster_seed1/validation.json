@@ -377,5 +377,184 @@
       "fraction_of_4x4_cells_visited": 0.24709302325581395
     }
   },
-  "run": "results/mspacman/cluster_seed1"
+  "run": "results/mspacman/cluster_seed1",
+  "P10_input_coverage": {
+    "states": 5553,
+    "zero_gradient_rows_cols": {
+      "nature": {
+        "rows": [
+          84,
+          85,
+          86,
+          87
+        ],
+        "cols": [
+          76,
+          77,
+          78,
+          79
+        ]
+      },
+      "nips": {
+        "rows": [
+          84,
+          85,
+          86,
+          87
+        ],
+        "cols": [
+          76,
+          77,
+          78,
+          79
+        ]
+      }
+    },
+    "noise_test": {
+      "rows 84-87": {
+        "max_abs_dq": 0.0,
+        "greedy_action_changed_share": 0.0
+      },
+      "cols 76-79": {
+        "max_abs_dq": 0.0,
+        "greedy_action_changed_share": 0.0
+      },
+      "rows 80-83": {
+        "max_abs_dq": 21.525806427001953,
+        "greedy_action_changed_share": 0.5926526202052944
+      },
+      "cols 72-75": {
+        "max_abs_dq": 21.908479690551758,
+        "greedy_action_changed_share": 0.4829821717990275
+      }
+    },
+    "lives_indicator_pixels_in_preprocessed_rows_86_87": {
+      "3": 8,
+      "2": 4,
+      "1": 0
+    },
+    "lives_redraw_test": {
+      "3 lives drawn as 1": {
+        "states": 2113,
+        "pixels_changed_per_frame": 8,
+        "max_abs_dq": 0.0,
+        "greedy_action_changed_share": 0.0
+      },
+      "1 lives drawn as 3": {
+        "states": 930,
+        "pixels_changed_per_frame": 8,
+        "max_abs_dq": 0.0,
+        "greedy_action_changed_share": 0.0
+      },
+      "2 lives drawn as 3": {
+        "states": 2510,
+        "pixels_changed_per_frame": 4,
+        "max_abs_dq": 0.0,
+        "greedy_action_changed_share": 0.0
+      },
+      "3 lives drawn as 2": {
+        "states": 2113,
+        "pixels_changed_per_frame": 4,
+        "max_abs_dq": 0.0,
+        "greedy_action_changed_share": 0.0
+      }
+    },
+    "mspacman_share_of_steps_partly_in_raw_cols_152_159": 0.02575184584909058,
+    "mspacman_share_of_steps_entirely_in_raw_cols_152_159": 0.0021609940572663426,
+    "mspacman_lowest_raw_row": 168
+  },
+  "P11_frozen_phases": {
+    "games": 5,
+    "epsilon": 0.05,
+    "start": {
+      "n": 5,
+      "steps": {
+        "mean": 66.0,
+        "min": 66.0,
+        "max": 66.0
+      },
+      "distinct_states": {
+        "mean": 19.0,
+        "min": 19.0,
+        "max": 19.0
+      },
+      "maxq_mean": {
+        "mean": 2.088150174328775,
+        "min": 2.088150174328775,
+        "max": 2.088150174328775
+      },
+      "maxq_first": {
+        "mean": 1.945280909538269,
+        "min": 1.945280909538269,
+        "max": 1.945280909538269
+      },
+      "maxq_last": {
+        "mean": 2.214158296585083,
+        "min": 2.214158296585083,
+        "max": 2.214158296585083
+      },
+      "realised_return_first_step": {
+        "mean": 12.928653933770983,
+        "min": 11.098277704151867,
+        "max": 14.174879515854254
+      },
+      "maxq_mean_steps_5_to_14_after": {
+        "mean": 29.99914520263672,
+        "min": 29.971671295166015,
+        "max": 30.006013679504395
+      },
+      "huber_fixed_point": 1.538461538461537,
+      "squared_loss_fixed_point": 17.999487121582025
+    },
+    "restart_after_lost_life": {
+      "n": 10,
+      "steps": {
+        "mean": 29.0,
+        "min": 29.0,
+        "max": 29.0
+      },
+      "distinct_states": {
+        "mean": 19.0,
+        "min": 19.0,
+        "max": 19.0
+      },
+      "maxq_mean": {
+        "mean": 4.694097231174338,
+        "min": 3.574546994834111,
+        "max": 5.482354180566196
+      },
+      "realised_return_first_step": {
+        "mean": 7.65580012177085,
+        "min": 0.7034476949995692,
+        "max": 14.179349460848382
+      },
+      "maxq_mean_steps_5_to_14_after": {
+        "mean": 15.438926060199739,
+        "min": 3.910804104804993,
+        "max": 25.19288215637207
+      },
+      "huber_fixed_point": 3.571428571428568,
+      "squared_loss_fixed_point": 11.941044374685733
+    },
+    "death_animation": {
+      "n": 15,
+      "steps": {
+        "mean": 19.266666666666666,
+        "min": 19.0,
+        "max": 20.0
+      },
+      "reward_sum": {
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "maxq_mean": {
+        "mean": 3.896561164207626,
+        "min": 0.2725427056613721,
+        "max": 12.317873001098633
+      }
+    },
+    "steps_with_prediction_below_3_and_return_above_10": 335,
+    "of_these_in_the_frozen_start": 330
+  }
 }
